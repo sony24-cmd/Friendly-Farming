@@ -1,0 +1,33 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Farmer dashboard illustration">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dff1ff"/>
+      <stop offset="100%" stop-color="#fef8e7"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5ca25f"/>
+      <stop offset="100%" stop-color="#3b7c43"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#sky)"/>
+  <circle cx="1020" cy="110" r="54" fill="#ffd86c"/>
+  <path d="M0 460 C230 390 470 420 620 455 C790 495 965 505 1200 450 V700 H0 Z" fill="url(#field)"/>
+  <path d="M0 530 C220 500 420 525 620 560 C810 590 980 595 1200 545 V700 H0 Z" fill="#2e6f40" opacity="0.34"/>
+  <rect x="120" y="208" width="460" height="282" rx="24" fill="#ffffff" stroke="#c8d8ea" stroke-width="4"/>
+  <rect x="154" y="242" width="180" height="108" rx="16" fill="#eff6ff"/>
+  <rect x="358" y="242" width="188" height="42" rx="12" fill="#f6f3e5"/>
+  <rect x="358" y="300" width="156" height="42" rx="12" fill="#f6f3e5"/>
+  <rect x="154" y="374" width="392" height="20" rx="10" fill="#e7efdc"/>
+  <rect x="154" y="408" width="330" height="20" rx="10" fill="#f7ead6"/>
+  <path d="M184 331 C208 286 238 286 264 331" fill="none" stroke="#3f8a4f" stroke-width="12" stroke-linecap="round"/>
+  <path d="M246 331 C270 286 300 286 326 331" fill="none" stroke="#2e6f40" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="800" cy="340" r="128" fill="#fff7e6" stroke="#dbb57f" stroke-width="5"/>
+  <path d="M750 390 C760 340 770 310 790 270 C810 310 820 340 832 390" fill="#e3f2dd" stroke="#4d9258" stroke-width="6"/>
+  <line x1="790" y1="268" x2="790" y2="420" stroke="#3f8a4f" stroke-width="7"/>
+  <path d="M789 327 C744 307 732 274 742 238 C778 241 802 266 811 309" fill="#62a463"/>
+  <path d="M792 339 C842 323 864 292 857 256 C822 261 798 286 787 327" fill="#4f9556"/>
+  <rect x="902" y="282" width="188" height="146" rx="18" fill="#ffffff" stroke="#cfdac8" stroke-width="4"/>
+  <rect x="936" y="318" width="122" height="20" rx="10" fill="#eff5e3"/>
+  <rect x="936" y="352" width="122" height="20" rx="10" fill="#f8ebd6"/>
+  <rect x="936" y="386" width="96" height="20" rx="10" fill="#e7efff"/>
+</svg>

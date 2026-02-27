@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Government Schemes Information - Farmers Friendly Smart Farming Assistant</title>
+  <meta name="description" content="Search and filter farmer government schemes by category, eligibility, and benefit." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <script defer src="../js/common.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark" aria-hidden="true">FF</div>
+        <div>
+          <h1 class="brand-title">Farmers Friendly Smart Farming Assistant Scheme Guide</h1>
+          <p class="brand-subtitle">Farmer benefit schemes in one searchable view</p>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <nav class="nav-inline" aria-label="Feature navigation">
+          <a class="nav-link" href="language_selection_home_dashboard.html">Dashboard</a>
+          <a class="nav-link" href="crop_disease_detection.html">Disease</a>
+          <a class="nav-link" href="weather_advisory.html">Weather</a>
+          <a class="nav-link" href="soil_analysis_fertilizer_recommendations.html">Soil</a>
+          <a class="nav-link active" href="government_schemes_information.html">Schemes</a>
+        </nav>
+
+        <label class="visually-hidden" for="languageSelector">Choose language</label>
+        <select id="languageSelector" class="lang-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="te">Telugu</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    <section class="hero fade-up">
+      <div class="hero-grid">
+        <div>
+          <h2 id="pageTitle" class="hero-title">Government Schemes for Farmers</h2>
+          <p id="pageSubtitle" class="hero-copy">
+            Search by scheme name, filter by category, save favorites, and directly open official portals for applications.
+          </p>
+        </div>
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <p class="kpi-value">Searchable</p>
+            <p id="kpiOne" class="kpi-label">Find schemes by keyword and objective</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-value">Categorized</p>
+            <p id="kpiTwo" class="kpi-label">Subsidy, credit, insurance, irrigation and more</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-value">Favorite List</p>
+            <p id="kpiThree" class="kpi-label">Keep most-used schemes for fast recall</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:70ms;">
+      <h3 class="section-title">Search and Filter</h3>
+      <div class="form-grid" style="margin-top:0.7rem;">
+        <div style="grid-column:1 / -1;">
+          <label class="label" for="searchInput">Search schemes</label>
+          <input id="searchInput" class="input" type="text" placeholder="Try PM-KISAN, insurance, irrigation, credit card..." />
+        </div>
+      </div>
+      <div id="categoryPills" class="pill-group" style="margin-top:0.75rem;">
+        <button class="pill active" data-category="all" type="button">All</button>
+        <button class="pill" data-category="subsidy" type="button">Subsidy</button>
+        <button class="pill" data-category="credit" type="button">Credit</button>
+        <button class="pill" data-category="insurance" type="button">Insurance</button>
+        <button class="pill" data-category="irrigation" type="button">Irrigation</button>
+        <button class="pill" data-category="training" type="button">Training</button>
+        <button class="pill" data-category="market" type="button">Market Access</button>
+      </div>
+      <p id="resultCount" class="muted" style="margin:0.8rem 0 0;">Showing 0 schemes</p>
+    </section>
+
+    <section id="favoritesSection" class="card fade-up" style="margin-top:1rem; display:none;">
+      <h3 class="section-title">Favorite Schemes</h3>
+      <div id="favoritesWrap" class="card-grid two" style="margin-top:0.7rem;"></div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:140ms;">
+      <h3 class="section-title">Available Schemes</h3>
+      <div id="schemeWrap" class="card-grid two" style="margin-top:0.7rem;"></div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:180ms;">
+      <h3 class="section-title">Support Contacts</h3>
+      <div class="card-grid three" style="margin-top:0.7rem;">
+        <article class="card-link">
+          <h4 class="card-title">Kisan Call Center</h4>
+          <p class="card-body">1800-180-1551 (Toll-free)</p>
+        </article>
+        <article class="card-link">
+          <h4 class="card-title">PM-KISAN Helpdesk</h4>
+          <p class="card-body">155261 / 011-24300606</p>
+        </article>
+        <article class="card-link">
+          <h4 class="card-title">Important Reminder</h4>
+          <p class="card-body">Verify timelines and eligibility on official portals before application.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <p>Farmers Friendly Smart Farming Assistant Scheme Guide</p>
+      <p>Always verify latest rules on official websites. <span data-year></span></p>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabs" aria-label="Mobile navigation">
+    <a href="language_selection_home_dashboard.html">Home</a>
+    <a href="crop_disease_detection.html">Disease</a>
+    <a href="weather_advisory.html">Weather</a>
+    <a href="soil_analysis_fertilizer_recommendations.html">Soil</a>
+    <a class="active" href="government_schemes_information.html">Schemes</a>
+  </nav>
+
+  <script>
+    (function () {
+      var FAVORITE_KEY = "agroai_favorite_schemes";
+      var activeCategory = "all";
+      var searchText = "";
+      var expanded = {};
+
+      var schemes = [
+        {
+          id: "pm-kisan",
+          name: "PM-KISAN Samman Nidhi",
+          category: "subsidy",
+          benefit: "INR 6,000 annual support in installments",
+          eligibility: "Landholding farmer families as per scheme rules",
+          timeline: "Ongoing",
+          summary: "Direct income transfer support for small and marginal farming households.",
+          details: [
+            "Ensure Aadhaar and bank account are correctly linked.",
+            "Maintain updated land records for smooth verification.",
+            "Use official PM-KISAN portal for registration and status."
+          ],
+          link: "https://pmkisan.gov.in/"
+        },
+        {
+          id: "kcc",
+          name: "Kisan Credit Card (KCC)",
+          category: "credit",
+          benefit: "Working capital credit for crop production",
+          eligibility: "Farmers, tenant farmers, and SHG/JLG groups as eligible",
+          timeline: "Ongoing",
+          summary: "Short-term crop loan support for seeds, fertilizers, labor, and allied expenses.",
+          details: [
+            "Interest subvention may apply for timely repayment.",
+            "Use loan amount for productive crop operations only.",
+            "Carry ID proof, land records, and crop details while applying."
+          ],
+          link: "https://www.myscheme.gov.in/schemes/kcc"
+        },
+        {
+          id: "pmfby",
+          name: "Pradhan Mantri Fasal Bima Yojana",
+          category: "insurance",
+          benefit: "Crop insurance against weather and yield loss",
+          eligibility: "Farmers enrolled through notified crops and areas",
+          timeline: "Seasonal enrollment windows",
+          summary: "Provides risk coverage for crop failure due to natural calamities and adverse weather.",
+          details: [
+            "Enroll before notified cut-off date in your district.",
+            "Report crop loss quickly through approved channels.",
+            "Keep policy and enrollment details safely documented."
+          ],
+          link: "https://pmfby.gov.in/"
+        },
+        {
+          id: "pmksy",
+          name: "Pradhan Mantri Krishi Sinchai Yojana",
+          category: "irrigation",
+          benefit: "Micro-irrigation and water-use efficiency support",
+          eligibility: "Farmers applying via state agriculture/horticulture departments",
+          timeline: "State-wise application windows",
+          summary: "Encourages drip/sprinkler adoption and improved on-farm water management.",
+          details: [
+            "Subsidy rates vary by state and category.",
+            "Field inspection may be required before approval.",
+            "Maintain bills and installation records for claim processing."
+          ],
+          link: "https://pmksy.gov.in/"
+        },
+        {
+          id: "smam",
+          name: "Sub-Mission on Agricultural Mechanization",
+          category: "subsidy",
+          benefit: "Assistance for farm equipment purchase",
+          eligibility: "Individual farmers, FPOs, custom hiring centers",
+          timeline: "State rollout-based",
+          summary: "Subsidy support for selected machinery to improve farm productivity.",
+          details: [
+            "Priority often given to small and marginal farmers.",
+            "Approved equipment list differs by state.",
+            "Apply through agriculture department or notified portal."
+          ],
+          link: "https://agrimachinery.nic.in/"
+        },
+        {
+          id: "atma",
+          name: "ATMA Farmer Training Programs",
+          category: "training",
+          benefit: "Capacity building, demonstrations, and exposure visits",
+          eligibility: "Farmers through district ATMA units",
+          timeline: "Periodic",
+          summary: "Hands-on extension support to improve productivity and farm practices.",
+          details: [
+            "Useful for learning integrated nutrient and pest management.",
+            "District agriculture office provides calendar and nomination details.",
+            "Group participation increases local adoption impact."
+          ],
+          link: "https://atmaindia.net/"
+        },
+        {
+          id: "enam",
+          name: "e-NAM Market Linkage",
+          category: "market",
+          benefit: "Digital mandi access and price discovery",
+          eligibility: "Farmers registered with participating mandis",
+          timeline: "Ongoing",
+          summary: "Improves market transparency and wider buyer access through online trading infrastructure.",
+          details: [
+            "Complete onboarding at local e-NAM mandi facilitation center.",
+            "Use grading and quality standards for better price realization.",
+            "Track market trends before dispatching produce."
+          ],
+          link: "https://www.enam.gov.in/"
+        },
+        {
+          id: "agri-infra",
+          name: "Agriculture Infrastructure Fund",
+          category: "credit",
+          benefit: "Long-term financing for post-harvest infrastructure",
+          eligibility: "FPOs, PACS, agri-entrepreneurs, and allied entities",
+          timeline: "As per notifications",
+          summary: "Supports warehouses, cold chain, and value-addition infrastructure with credit support.",
+          details: [
+            "Useful for storage and aggregation projects.",
+            "Project appraisal and financial viability are required.",
+            "Coordinate with banks and implementing agencies for sanction."
+          ],
+          link: "https://agriinfra.dac.gov.in/"
+        }
+      ];
+
+      var translation = {
+        en: {
+          pageTitle: "Government Schemes for Farmers",
+          pageSubtitle: "Search by scheme name, filter by category, save favorites, and directly open official portals for applications.",
+          kpiOne: "Find schemes by keyword and objective",
+          kpiTwo: "Subsidy, credit, insurance, irrigation and more",
+          kpiThree: "Keep most-used schemes for fast recall"
+        },
+        hi: {
+          pageTitle: "Kisano ke liye sarkari yojanaen",
+          pageSubtitle: "Naam ya category se yojana dhundhiye, favorites me rakhiye, aur official portal kholiye.",
+          kpiOne: "Keyword se scheme jaldi dhundhiye",
+          kpiTwo: "Subsidy, credit, insurance, irrigation sab ek jagah",
+          kpiThree: "Favorite list se fast access"
+        },
+        te: {
+          pageTitle: "Rythula kosam government schemes",
+          pageSubtitle: "Scheme name leda category tho search chesi, favorites save chesi, official portals open cheyyandi.",
+          kpiOne: "Keywords tho quick search",
+          kpiTwo: "Subsidy, credit, insurance, irrigation okkate place",
+          kpiThree: "Favorites tho fast recall"
+        }
+      };
+
+      function applyLanguage(language) {
+        var text = translation[language] || translation.en;
+        Object.keys(text).forEach(function (id) {
+          var node = document.getElementById(id);
+          if (node) {
+            node.textContent = text[id];
+          }
+        });
+      }
+
+      function favorites() {
+        return window.AgroAI.loadJSON(FAVORITE_KEY, []);
+      }
+
+      function isFavorite(id) {
+        return favorites().indexOf(id) >= 0;
+      }
+
+      function toggleFavorite(id) {
+        var current = favorites();
+        if (current.indexOf(id) >= 0) {
+          current = current.filter(function (entry) { return entry !== id; });
+        } else {
+          current.push(id);
+        }
+        window.AgroAI.saveJSON(FAVORITE_KEY, current);
+        renderFavorites();
+        renderSchemes();
+      }
+
+      function schemeMatches(scheme) {
+        var text = (scheme.name + " " + scheme.summary + " " + scheme.category + " " + scheme.benefit).toLowerCase();
+        var searchPass = !searchText || text.indexOf(searchText) >= 0;
+        var categoryPass = activeCategory === "all" || scheme.category === activeCategory;
+        return searchPass && categoryPass;
+      }
+
+      function categoryBadge(category) {
+        if (category === "subsidy") {
+          return "<span class=\"badge good\">Subsidy</span>";
+        }
+        if (category === "credit") {
+          return "<span class=\"badge info\">Credit</span>";
+        }
+        if (category === "insurance") {
+          return "<span class=\"badge warn\">Insurance</span>";
+        }
+        if (category === "irrigation") {
+          return "<span class=\"badge good\">Irrigation</span>";
+        }
+        if (category === "training") {
+          return "<span class=\"badge info\">Training</span>";
+        }
+        return "<span class=\"badge warn\">Market</span>";
+      }
+
+      function renderSchemes() {
+        var filtered = schemes.filter(schemeMatches);
+        var wrap = document.getElementById("schemeWrap");
+        wrap.innerHTML = "";
+
+        if (!filtered.length) {
+          wrap.innerHTML = "<div class=\"empty-state\">No schemes matched this search/filter.</div>";
+          document.getElementById("resultCount").textContent = "Showing 0 schemes";
+          return;
+        }
+
+        filtered.forEach(function (scheme) {
+          var card = document.createElement("article");
+          card.className = "card-link";
+          var fav = isFavorite(scheme.id);
+          var expandedBody = expanded[scheme.id] ? "" :
+            " style=\"display:none;\"";
+
+          card.innerHTML =
+            "<div class=\"inline\" style=\"justify-content:space-between; width:100%;\">" +
+            categoryBadge(scheme.category) +
+            "<button class=\"btn small " + (fav ? "btn-secondary" : "btn-ghost") + "\" data-action=\"favorite\" data-id=\"" + scheme.id + "\" type=\"button\">" + (fav ? "Favorited" : "Favorite") + "</button></div>" +
+            "<h4 class=\"card-title\" style=\"margin-top:0.6rem;\">" + scheme.name + "</h4>" +
+            "<p class=\"card-body\">" + scheme.summary + "</p>" +
+            "<p class=\"card-body\"><strong>Benefit:</strong> " + scheme.benefit + "</p>" +
+            "<p class=\"card-body\"><strong>Eligibility:</strong> " + scheme.eligibility + "</p>" +
+            "<p class=\"card-body\"><strong>Timeline:</strong> " + scheme.timeline + "</p>" +
+            "<div class=\"inline\" style=\"margin-top:0.6rem;\">" +
+            "<button class=\"btn btn-ghost small\" data-action=\"toggle\" data-id=\"" + scheme.id + "\" type=\"button\">" + (expanded[scheme.id] ? "Hide Details" : "View Details") + "</button>" +
+            "<a class=\"btn btn-primary small\" target=\"_blank\" rel=\"noopener\" href=\"" + scheme.link + "\">Official Site</a></div>" +
+            "<div data-detail=\"" + scheme.id + "\"" + expandedBody + " class=\"notice\" style=\"margin-top:0.7rem;\"><ul class=\"list-clean\">" +
+            scheme.details.map(function (line) { return "<li>" + line + "</li>"; }).join("") +
+            "</ul></div>";
+
+          wrap.appendChild(card);
+        });
+
+        document.getElementById("resultCount").textContent = "Showing " + filtered.length + " schemes";
+
+        wrap.querySelectorAll("[data-action='favorite']").forEach(function (button) {
+          button.addEventListener("click", function () {
+            toggleFavorite(button.getAttribute("data-id"));
+          });
+        });
+
+        wrap.querySelectorAll("[data-action='toggle']").forEach(function (button) {
+          button.addEventListener("click", function () {
+            var id = button.getAttribute("data-id");
+            expanded[id] = !expanded[id];
+            renderSchemes();
+          });
+        });
+      }
+
+      function renderFavorites() {
+        var favIds = favorites();
+        var section = document.getElementById("favoritesSection");
+        var wrap = document.getElementById("favoritesWrap");
+
+        if (!favIds.length) {
+          section.style.display = "none";
+          wrap.innerHTML = "";
+          return;
+        }
+
+        section.style.display = "block";
+        wrap.innerHTML = "";
+
+        favIds.forEach(function (id) {
+          var scheme = schemes.find(function (entry) { return entry.id === id; });
+          if (!scheme) {
+            return;
+          }
+
+          var card = document.createElement("article");
+          card.className = "card-link";
+          card.innerHTML =
+            "<h4 class=\"card-title\">" + scheme.name + "</h4>" +
+            "<p class=\"card-body\">" + scheme.benefit + "</p>" +
+            "<div class=\"inline\" style=\"margin-top:0.5rem;\">" +
+            "<button class=\"btn btn-ghost small\" data-remove=\"" + scheme.id + "\" type=\"button\">Remove</button>" +
+            "<a class=\"btn btn-primary small\" target=\"_blank\" rel=\"noopener\" href=\"" + scheme.link + "\">Open Site</a></div>";
+          wrap.appendChild(card);
+        });
+
+        wrap.querySelectorAll("[data-remove]").forEach(function (button) {
+          button.addEventListener("click", function () {
+            toggleFavorite(button.getAttribute("data-remove"));
+          });
+        });
+      }
+
+      function setupFilters() {
+        document.getElementById("searchInput").addEventListener("input", function (event) {
+          searchText = event.target.value.trim().toLowerCase();
+          renderSchemes();
+        });
+
+        document.querySelectorAll("#categoryPills .pill").forEach(function (pill) {
+          pill.addEventListener("click", function () {
+            activeCategory = pill.getAttribute("data-category");
+            document.querySelectorAll("#categoryPills .pill").forEach(function (entry) {
+              entry.classList.remove("active");
+            });
+            pill.classList.add("active");
+            renderSchemes();
+          });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        window.AgroAI.setupLanguage("languageSelector", applyLanguage);
+        setupFilters();
+        renderFavorites();
+        renderSchemes();
+      });
+    })();
+  </script>
+</body>
+</html>
+

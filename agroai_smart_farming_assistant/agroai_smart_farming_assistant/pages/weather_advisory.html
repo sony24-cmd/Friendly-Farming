@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Advisory - Farmers Friendly Smart Farming Assistant</title>
+  <meta name="description" content="Generate weather-based crop advisories for irrigation, spraying, and harvest planning." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <script defer src="../js/common.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark" aria-hidden="true">FF</div>
+        <div>
+          <h1 class="brand-title">Farmers Friendly Smart Farming Assistant Weather Advisory</h1>
+          <p class="brand-subtitle">Location-based field action planning</p>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <nav class="nav-inline" aria-label="Feature navigation">
+          <a class="nav-link" href="language_selection_home_dashboard.html">Dashboard</a>
+          <a class="nav-link" href="crop_disease_detection.html">Disease</a>
+          <a class="nav-link active" href="weather_advisory.html">Weather</a>
+          <a class="nav-link" href="soil_analysis_fertilizer_recommendations.html">Soil</a>
+          <a class="nav-link" href="government_schemes_information.html">Schemes</a>
+        </nav>
+
+        <label class="visually-hidden" for="languageSelector">Choose language</label>
+        <select id="languageSelector" class="lang-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="te">Telugu</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    <section class="hero fade-up">
+      <div class="hero-grid">
+        <div>
+          <h2 id="pageTitle" class="hero-title">Weather Advisory for Farm Operations</h2>
+          <p id="pageSubtitle" class="hero-copy">
+            Enter your village or district and crop stage to generate a practical weather advisory for the next 5 days.
+          </p>
+        </div>
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <p class="kpi-value">5-Day</p>
+            <p id="kpiOne" class="kpi-label">Forecast window for planning decisions</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-value">Actionable</p>
+            <p id="kpiTwo" class="kpi-label">Irrigation, spray, and harvest recommendations</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-value">Updated</p>
+            <p id="kpiThree" class="kpi-label">Last update: <span data-updated></span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:70ms;">
+      <h3 class="section-title">Location and Crop Stage</h3>
+      <div class="form-grid" style="margin-top:0.7rem;">
+        <div>
+          <label class="label" for="locationInput">Village / District</label>
+          <input id="locationInput" class="input" type="text" placeholder="Example: Guntur, Andhra Pradesh" value="Guntur, Andhra Pradesh" />
+        </div>
+        <div>
+          <label class="label" for="cropStageSelect">Crop Stage</label>
+          <select id="cropStageSelect" class="select">
+            <option value="sowing">Sowing / Transplanting</option>
+            <option value="vegetative" selected>Vegetative growth</option>
+            <option value="flowering">Flowering / pod formation</option>
+            <option value="harvest">Harvest preparation</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="inline" style="margin-top:0.8rem;">
+        <button id="detectLocationBtn" class="btn btn-ghost" type="button">Detect Current Location</button>
+        <button id="generateBtn" class="btn btn-primary" type="button">Generate Advisory</button>
+        <span id="lastGenerated" class="badge info">Not generated yet</span>
+      </div>
+    </section>
+
+    <section class="card-grid two fade-up" style="margin-top:1rem; animation-delay:120ms;">
+      <article class="card">
+        <h3 class="section-title">Current Conditions</h3>
+        <div class="card-grid two" style="margin-top:0.6rem;">
+          <div class="card-link">
+            <p class="muted" style="margin:0;">Temperature</p>
+            <h4 id="tempNow" class="card-title" style="margin-top:0.25rem;">--</h4>
+          </div>
+          <div class="card-link">
+            <p class="muted" style="margin:0;">Humidity</p>
+            <h4 id="humidityNow" class="card-title" style="margin-top:0.25rem;">--</h4>
+          </div>
+          <div class="card-link">
+            <p class="muted" style="margin:0;">Wind Speed</p>
+            <h4 id="windNow" class="card-title" style="margin-top:0.25rem;">--</h4>
+          </div>
+          <div class="card-link">
+            <p class="muted" style="margin:0;">Rain Probability</p>
+            <h4 id="rainNow" class="card-title" style="margin-top:0.25rem;">--</h4>
+          </div>
+        </div>
+        <div class="inline" style="margin-top:0.8rem;">
+          <span id="conditionBadge" class="badge info">Condition pending</span>
+          <span id="riskBadge" class="badge warn">Risk pending</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3 class="section-title">Operational Advisory</h3>
+        <ul id="advisoryList" class="list-clean" style="margin-top:0.55rem;"></ul>
+        <div class="inline" style="margin-top:0.8rem;">
+          <button id="speakAdvisoryBtn" class="btn btn-ghost small" type="button">Play Audio Advisory</button>
+          <button id="copyAdvisoryBtn" class="btn btn-secondary small" type="button">Copy Advisory Text</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:170ms;">
+      <h3 class="section-title">5-Day Forecast</h3>
+      <div id="forecastContainer" class="forecast-row" style="margin-top:0.6rem;"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <p>Farmers Friendly Smart Farming Assistant Weather Advisory</p>
+      <p>Use local rainfall and soil condition checks before final decisions. <span data-year></span></p>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabs" aria-label="Mobile navigation">
+    <a href="language_selection_home_dashboard.html">Home</a>
+    <a href="crop_disease_detection.html">Disease</a>
+    <a class="active" href="weather_advisory.html">Weather</a>
+    <a href="soil_analysis_fertilizer_recommendations.html">Soil</a>
+    <a href="government_schemes_information.html">Schemes</a>
+  </nav>
+
+  <script>
+    (function () {
+      var advisoryCache = [];
+
+      var translation = {
+        en: {
+          pageTitle: "Weather Advisory for Farm Operations",
+          pageSubtitle: "Enter your village or district and crop stage to generate a practical weather advisory for the next 5 days.",
+          kpiOne: "Forecast window for planning decisions",
+          kpiTwo: "Irrigation, spray, and harvest recommendations"
+        },
+        hi: {
+          pageTitle: "Kheti ke liye mausam advisory",
+          pageSubtitle: "Apna gaon ya district aur crop stage daaliye, aur agle 5 din ka practical advisory paaiye.",
+          kpiOne: "Planning ke liye 5 din ki window",
+          kpiTwo: "Sinchai, spray aur harvest sujhav"
+        },
+        te: {
+          pageTitle: "Farm operations kosam weather advisory",
+          pageSubtitle: "Mee village leda district mariyu crop stage ichchi next 5 days practical advisory pondandi.",
+          kpiOne: "Planning kosam 5 day forecast window",
+          kpiTwo: "Irrigation, spray, harvest recommendations"
+        }
+      };
+
+      function applyLanguage(language) {
+        var text = translation[language] || translation.en;
+        Object.keys(text).forEach(function (id) {
+          var node = document.getElementById(id);
+          if (node) {
+            node.textContent = text[id];
+          }
+        });
+      }
+
+      function conditionFrom(temp, rainChance, humidity) {
+        if (rainChance > 70) {
+          return "High chance of rain";
+        }
+        if (temp > 35 && humidity < 50) {
+          return "Hot and dry";
+        }
+        if (humidity > 80) {
+          return "Humid and cloudy";
+        }
+        return "Mostly stable";
+      }
+
+      function riskFrom(rainChance, wind, humidity) {
+        if (rainChance > 70 || wind > 22) {
+          return { label: "High operational risk", className: "badge risk" };
+        }
+        if (rainChance > 45 || humidity > 80) {
+          return { label: "Medium operational risk", className: "badge warn" };
+        }
+        return { label: "Low operational risk", className: "badge good" };
+      }
+
+      function generateWeather(location, stage) {
+        var seed = window.AgroAI.hash(location + "|" + stage + "|" + new Date().toDateString());
+        var max = 26 + (seed % 13);
+        var min = max - (6 + (seed % 4));
+        var humidity = 42 + (seed % 46);
+        var rainChance = 18 + (seed % 72);
+        var wind = 6 + (seed % 19);
+
+        return {
+          tempMax: max,
+          tempMin: min,
+          humidity: humidity,
+          rainChance: rainChance,
+          wind: wind,
+          condition: conditionFrom(max, rainChance, humidity)
+        };
+      }
+
+      function buildAdvisory(current, stage) {
+        var list = [];
+
+        if (current.rainChance > 65) {
+          list.push("Postpone fertilizer top dressing until rainfall reduces.");
+        } else {
+          list.push("Irrigate in short intervals and avoid water stagnation.");
+        }
+
+        if (current.wind > 18) {
+          list.push("Avoid pesticide spray during windy hours. Prefer early morning window.");
+        } else {
+          list.push("Spray operations are suitable in low-wind periods.");
+        }
+
+        if (stage === "flowering" && current.humidity > 75) {
+          list.push("High humidity during flowering may increase fungal pressure. Monitor leaves daily.");
+        } else if (stage === "harvest") {
+          list.push("Keep harvested produce under shade and plan transport before late evening moisture rise.");
+        } else {
+          list.push("Continue routine scouting for pest hotspots in border rows.");
+        }
+
+        if (current.tempMax >= 35) {
+          list.push("Use mulch or light irrigation to reduce heat stress in afternoon.");
+        } else {
+          list.push("Temperature remains within manageable range for most field operations.");
+        }
+
+        return list;
+      }
+
+      function renderForecast(seedBase) {
+        var container = document.getElementById("forecastContainer");
+        container.innerHTML = "";
+
+        for (var index = 0; index < 5; index += 1) {
+          var seed = seedBase + index * 17;
+          var max = 25 + (seed % 13);
+          var min = max - (5 + (seed % 4));
+          var rain = 15 + (seed % 75);
+          var day = new Date();
+          day.setDate(day.getDate() + index);
+
+          var card = document.createElement("article");
+          card.className = "forecast-card";
+          card.innerHTML = "<p class=\"muted\" style=\"margin:0; font-size:0.78rem;\">" + day.toLocaleDateString("en-IN", { weekday: "short" }) + "</p>" +
+            "<h4 style=\"margin:0.3rem 0 0.2rem; color:var(--soil-700);\">" + max + " / " + min + " C</h4>" +
+            "<p style=\"margin:0; font-size:0.82rem; color:var(--text-muted);\">Rain " + rain + "%</p>";
+
+          container.appendChild(card);
+        }
+      }
+
+      function renderAdvisory() {
+        var location = document.getElementById("locationInput").value.trim();
+        var stage = document.getElementById("cropStageSelect").value;
+
+        if (!location) {
+          window.AgroAI.toast("Enter a location", "error");
+          return;
+        }
+
+        var weather = generateWeather(location, stage);
+        var risk = riskFrom(weather.rainChance, weather.wind, weather.humidity);
+
+        document.getElementById("tempNow").textContent = weather.tempMax + " / " + weather.tempMin + " C";
+        document.getElementById("humidityNow").textContent = weather.humidity + "%";
+        document.getElementById("windNow").textContent = weather.wind + " km/h";
+        document.getElementById("rainNow").textContent = weather.rainChance + "%";
+
+        var conditionBadge = document.getElementById("conditionBadge");
+        conditionBadge.textContent = weather.condition;
+        conditionBadge.className = "badge info";
+
+        var riskBadge = document.getElementById("riskBadge");
+        riskBadge.textContent = risk.label;
+        riskBadge.className = risk.className;
+
+        advisoryCache = buildAdvisory(weather, stage);
+
+        var list = document.getElementById("advisoryList");
+        list.innerHTML = "";
+        advisoryCache.forEach(function (line) {
+          var item = document.createElement("li");
+          item.textContent = line;
+          list.appendChild(item);
+        });
+
+        var seedBase = window.AgroAI.hash(location + "|forecast");
+        renderForecast(seedBase);
+
+        document.getElementById("lastGenerated").textContent = "Generated: " + window.AgroAI.formatDate();
+        document.getElementById("lastGenerated").className = "badge good";
+      }
+
+      function detectLocation() {
+        if (!navigator.geolocation) {
+          window.AgroAI.toast("Geolocation is not available", "error");
+          return;
+        }
+
+        var button = document.getElementById("detectLocationBtn");
+        button.disabled = true;
+        button.textContent = "Detecting...";
+
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            var lat = position.coords.latitude.toFixed(3);
+            var lon = position.coords.longitude.toFixed(3);
+            document.getElementById("locationInput").value = lat + ", " + lon;
+            button.disabled = false;
+            button.textContent = "Detect Current Location";
+            window.AgroAI.toast("Location updated", "success");
+            renderAdvisory();
+          },
+          function () {
+            button.disabled = false;
+            button.textContent = "Detect Current Location";
+            window.AgroAI.toast("Unable to detect location. Enter manually.", "error");
+          },
+          { enableHighAccuracy: true, timeout: 9000 }
+        );
+      }
+
+      function speakAdvisory() {
+        if (!advisoryCache.length) {
+          window.AgroAI.toast("Generate advisory first", "error");
+          return;
+        }
+
+        if (!("speechSynthesis" in window)) {
+          window.AgroAI.toast("Speech not supported on this browser", "error");
+          return;
+        }
+
+        var summary = advisoryCache.join(" ");
+        var utterance = new SpeechSynthesisUtterance(summary);
+        utterance.rate = 0.95;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }
+
+      function copyAdvisory() {
+        if (!advisoryCache.length) {
+          window.AgroAI.toast("Generate advisory first", "error");
+          return;
+        }
+
+        var content = advisoryCache.map(function (item, index) {
+          return (index + 1) + ". " + item;
+        }).join("\n");
+
+        navigator.clipboard.writeText(content).then(function () {
+          window.AgroAI.toast("Advisory copied", "success");
+        }).catch(function () {
+          window.AgroAI.toast("Copy failed on this browser", "error");
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        window.AgroAI.setupLanguage("languageSelector", applyLanguage);
+
+        document.getElementById("generateBtn").addEventListener("click", renderAdvisory);
+        document.getElementById("detectLocationBtn").addEventListener("click", detectLocation);
+        document.getElementById("speakAdvisoryBtn").addEventListener("click", speakAdvisory);
+        document.getElementById("copyAdvisoryBtn").addEventListener("click", copyAdvisory);
+
+        renderAdvisory();
+      });
+    })();
+  </script>
+</body>
+</html>
+

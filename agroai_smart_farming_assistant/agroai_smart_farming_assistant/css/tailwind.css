@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #5e3023; /* rich-soil-brown */
+  --color-primary-50: #faf8f6; /* soil-brown-50 */
+  --color-primary-100: #f0e8e3; /* soil-brown-100 */
+  --color-primary-200: #dcc8bc; /* soil-brown-200 */
+  --color-primary-300: #c8a895; /* soil-brown-300 */
+  --color-primary-400: #b4886e; /* soil-brown-400 */
+  --color-primary-500: #a06847; /* soil-brown-500 */
+  --color-primary-600: #8c4820; /* soil-brown-600 */
+  --color-primary-700: #5e3023; /* soil-brown-700 */
+  --color-primary-800: #4a261c; /* soil-brown-800 */
+  --color-primary-900: #361c15; /* soil-brown-900 */
+
+  /* Secondary Colors */
+  --color-secondary: #bc6c25; /* harvest-amber */
+  --color-secondary-50: #fef9f3; /* amber-50 */
+  --color-secondary-100: #fdf2e7; /* amber-100 */
+  --color-secondary-200: #fae5cf; /* amber-200 */
+  --color-secondary-300: #f7d8b7; /* amber-300 */
+  --color-secondary-400: #f4cb9f; /* amber-400 */
+  --color-secondary-500: #f1be87; /* amber-500 */
+  --color-secondary-600: #ee9c56; /* amber-600 */
+  --color-secondary-700: #bc6c25; /* amber-700 */
+  --color-secondary-800: #96561e; /* amber-800 */
+  --color-secondary-900: #704017; /* amber-900 */
+
+  /* Accent Colors */
+  --color-accent: #8b4513; /* terracotta */
+  --color-accent-50: #faf7f4; /* terracotta-50 */
+  --color-accent-100: #f5efe9; /* terracotta-100 */
+  --color-accent-200: #ebdfd3; /* terracotta-200 */
+  --color-accent-300: #e1cfbd; /* terracotta-300 */
+  --color-accent-400: #d7bfa7; /* terracotta-400 */
+  --color-accent-500: #cdaf91; /* terracotta-500 */
+  --color-accent-600: #b8956a; /* terracotta-600 */
+  --color-accent-700: #8b4513; /* terracotta-700 */
+  --color-accent-800: #6f370f; /* terracotta-800 */
+  --color-accent-900: #53290b; /* terracotta-900 */
+
+  /* Background Colors */
+  --color-background: #f3efe5; /* cream-background */
+  --color-surface: #ffffff; /* pure-white */
+
+  /* Text Colors */
+  --color-text-primary: #2d1810; /* deep-brown-black */
+  --color-text-secondary: #6b4423; /* medium-brown */
+
+  /* Status Colors */
+  --color-success: #4a7c59; /* natural-green */
+  --color-success-50: #f3f8f5; /* green-50 */
+  --color-success-100: #e7f1ea; /* green-100 */
+  --color-success-200: #cfe3d5; /* green-200 */
+  --color-success-300: #b7d5c0; /* green-300 */
+  --color-success-400: #9fc7ab; /* green-400 */
+  --color-success-500: #87b996; /* green-500 */
+  --color-success-600: #6f9d81; /* green-600 */
+  --color-success-700: #4a7c59; /* green-700 */
+  --color-success-800: #3c6347; /* green-800 */
+  --color-success-900: #2e4a35; /* green-900 */
+
+  --color-warning: #d4851f; /* golden-amber */
+  --color-warning-50: #fef8f1; /* warning-50 */
+  --color-warning-100: #fdf1e3; /* warning-100 */
+  --color-warning-200: #fbe3c7; /* warning-200 */
+  --color-warning-300: #f9d5ab; /* warning-300 */
+  --color-warning-400: #f7c78f; /* warning-400 */
+  --color-warning-500: #f5b973; /* warning-500 */
+  --color-warning-600: #e69d3b; /* warning-600 */
+  --color-warning-700: #d4851f; /* warning-700 */
+  --color-warning-800: #aa6a19; /* warning-800 */
+  --color-warning-900: #805013; /* warning-900 */
+
+  --color-error: #a0522d; /* muted-rust */
+  --color-error-50: #faf6f4; /* error-50 */
+  --color-error-100: #f5ede9; /* error-100 */
+  --color-error-200: #ebdbd3; /* error-200 */
+  --color-error-300: #e1c9bd; /* error-300 */
+  --color-error-400: #d7b7a7; /* error-400 */
+  --color-error-500: #cda591; /* error-500 */
+  --color-error-600: #b8816a; /* error-600 */
+  --color-error-700: #a0522d; /* error-700 */
+  --color-error-800: #804224; /* error-800 */
+  --color-error-900: #60311b; /* error-900 */
+
+  /* Border Colors */
+  --color-border: #e5d5c8; /* muted-earth-border */
+  --color-border-light: #f0e8e3; /* light-earth-border */
+}
+
+/* Base Styles */
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rubik', sans-serif;
+    color: var(--color-text-primary);
+  }
+
+  /* Touch-friendly targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Smooth transitions */
+  * {
+    transition: all 300ms ease-in-out;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none;
+    }
+  }
+}
+
+/* Component Styles */
+@layer components {
+  .shadow-soft {
+    box-shadow: 0 2px 8px rgba(94, 48, 35, 0.1);
+  }
+
+  .shadow-medium {
+    box-shadow: 0 4px 12px rgba(94, 48, 35, 0.15);
+  }
+
+  .shadow-strong {
+    box-shadow: 0 8px 24px rgba(94, 48, 35, 0.2);
+  }
+
+  .border-earth {
+    border-color: var(--color-border);
+  }
+
+  .border-earth-light {
+    border-color: var(--color-border-light);
+  }
+
+  .rounded-card {
+    border-radius: 8px;
+  }
+
+  .rounded-button {
+    border-radius: 4px;
+  }
+}

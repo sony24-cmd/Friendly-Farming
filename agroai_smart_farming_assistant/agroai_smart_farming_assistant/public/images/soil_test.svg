@@ -1,0 +1,24 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Soil testing illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef8ff"/>
+      <stop offset="100%" stop-color="#fdf0de"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect x="118" y="114" width="964" height="472" rx="34" fill="#ffffff" stroke="#ddd4c6" stroke-width="5"/>
+  <rect x="164" y="170" width="430" height="362" rx="26" fill="#f8f7f2" stroke="#dad4c8" stroke-width="4"/>
+  <rect x="205" y="214" width="348" height="20" rx="10" fill="#eddcc2"/>
+  <rect x="205" y="246" width="296" height="20" rx="10" fill="#eddcc2"/>
+  <rect x="205" y="308" width="348" height="20" rx="10" fill="#d8e9d9"/>
+  <rect x="205" y="340" width="276" height="20" rx="10" fill="#d8e9d9"/>
+  <rect x="205" y="402" width="348" height="20" rx="10" fill="#d7e4f8"/>
+  <rect x="205" y="434" width="304" height="20" rx="10" fill="#d7e4f8"/>
+  <circle cx="826" cy="352" r="170" fill="#fff9ee" stroke="#d8be8f" stroke-width="5"/>
+  <path d="M752 460 C752 389 804 304 826 246 C848 304 900 389 900 460 Z" fill="#8d5a32"/>
+  <path d="M802 286 C826 254 852 244 882 250 C860 278 845 294 822 307 Z" fill="#5e9f5f"/>
+  <path d="M820 332 C782 318 764 294 761 260 C791 264 813 281 828 310 Z" fill="#4b8d53"/>
+  <rect x="918" y="214" width="122" height="46" rx="12" fill="#eaf4ff"/>
+  <rect x="918" y="274" width="122" height="46" rx="12" fill="#f7e8d2"/>
+  <rect x="918" y="334" width="122" height="46" rx="12" fill="#e3f1de"/>
+</svg>

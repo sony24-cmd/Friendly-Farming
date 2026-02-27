@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmers Friendly Smart Farming Assistant</title>
+  <meta name="description" content="Farmer-friendly digital assistant for weather, crop disease checks, soil planning, seasonal crop selection, and schemes." />
+  <link rel="stylesheet" href="css/main.css" />
+  <script defer src="js/common.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="brand-mark" aria-hidden="true">FF</div>
+        <div>
+          <h1 class="brand-title" data-i18n="brandTitle">Farmers Friendly Smart Farming Assistant</h1>
+          <p class="brand-subtitle" data-i18n="brandSubtitle">Practical field support for daily farming decisions</p>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <nav class="nav-inline" aria-label="Main navigation">
+          <a class="nav-link active" href="index.html" data-i18n="navOverview">Overview</a>
+          <a class="nav-link" href="pages/language_selection_home_dashboard.html" data-i18n="navDashboard">Dashboard</a>
+          <a class="nav-link" href="pages/weather_advisory.html" data-i18n="navWeather">Weather</a>
+          <a class="nav-link" href="pages/government_schemes_information.html" data-i18n="navSchemes">Schemes</a>
+        </nav>
+
+        <label class="visually-hidden" for="languageSelector" data-i18n="languageLabel">Choose language</label>
+        <select id="languageSelector" class="lang-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="te">Telugu</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    <section class="hero fade-up">
+      <div class="hero-grid">
+        <div>
+          <h2 class="hero-title" data-i18n="welcomeTitle">One dashboard for field, market, and weather decisions</h2>
+          <p class="hero-copy" data-i18n="welcomeCopy">
+            Use Farmers Friendly Agriculture to check disease risk from crop photos, estimate fertilizer plans from soil values,
+            get weather-based advisories, shortlist suitable crops for the season, and track scheme benefits.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="pages/language_selection_home_dashboard.html" data-i18n="openDashboard">Open Farmer Dashboard</a>
+            <a class="btn btn-ghost" href="pages/weather_advisory.html" data-i18n="checkWeather">Check Weather First</a>
+          </div>
+
+          <p class="muted" style="margin:0.9rem 0 0; font-size:0.85rem;">
+            <span data-i18n="updatedLabel">Last updated:</span> <span data-updated></span>
+          </p>
+        </div>
+
+        <article class="hero-media" aria-label="Farm overview visual">
+          <img src="public/images/farm_dashboard.svg" alt="Farmer planning activities across weather, disease, and soil tasks" />
+          <span class="hero-media-badge" data-i18n="visualBadge">Daily Planning View</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:60ms;">
+      <h3 class="section-title" data-i18n="todayTitle">What you can do right now</h3>
+      <div class="card-grid three">
+        <a class="card-link" href="pages/crop_disease_detection.html">
+          <p class="badge good" data-i18n="diseaseBadge">Disease Check</p>
+          <h4 class="card-title" data-i18n="diseaseTitle">Crop Disease Detection</h4>
+          <p class="card-body" data-i18n="diseaseBody">Upload a leaf photo, get likely disease, confidence level, and treatment plan.</p>
+        </a>
+
+        <a class="card-link" href="pages/soil_analysis_fertilizer_recommendations.html">
+          <p class="badge info" data-i18n="soilBadge">Soil Plan</p>
+          <h4 class="card-title" data-i18n="soilTitle">Soil + Fertilizer Recommendation</h4>
+          <p class="card-body" data-i18n="soilBody">Enter NPK and pH values to calculate soil score, nutrient status, and fertilizer estimate.</p>
+        </a>
+
+        <a class="card-link" href="pages/seasonal_crop_suggestions.html">
+          <p class="badge warn" data-i18n="seasonBadge">Season Fit</p>
+          <h4 class="card-title" data-i18n="seasonTitle">Seasonal Crop Suggestions</h4>
+          <p class="card-body" data-i18n="seasonBody">Filter crops by season, region, water availability, and budget for practical planning.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:105ms;">
+      <h3 class="section-title" data-i18n="galleryTitle">Visual Advisory Shortcuts</h3>
+      <div class="image-grid" style="margin-top:0.75rem;">
+        <article class="image-card">
+          <img src="public/images/weather_field.svg" alt="Weather changes over farmland" />
+          <div class="image-caption">
+            <h4 data-i18n="galleryWeatherTitle">Weather Risk Watch</h4>
+            <p data-i18n="galleryWeatherBody">Generate 5-day operation advice before irrigation, spraying, and harvest scheduling.</p>
+          </div>
+        </article>
+        <article class="image-card">
+          <img src="public/images/disease_leaf.svg" alt="Leaf disease analysis workflow" />
+          <div class="image-caption">
+            <h4 data-i18n="galleryDiseaseTitle">Photo-based Plant Health</h4>
+            <p data-i18n="galleryDiseaseBody">Capture a leaf, review severity, and save reminders for follow-up spray or scouting.</p>
+          </div>
+        </article>
+        <article class="image-card">
+          <img src="public/images/soil_test.svg" alt="Soil and fertilizer testing report" />
+          <div class="image-caption">
+            <h4 data-i18n="gallerySoilTitle">Soil Action Planner</h4>
+            <p data-i18n="gallerySoilBody">Turn NPK and pH values into a clear fertilizer sequence and cost estimate.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="split fade-up" style="margin-top:1rem; animation-delay:140ms;">
+      <article class="card">
+        <h3 class="section-title" data-i18n="helplineTitle">Farmer Helpline Snapshot</h3>
+        <div class="stack">
+          <div class="notice" data-i18n="helplineOne">Kisan Call Center: 1800-180-1551 (toll-free)</div>
+          <div class="notice" data-i18n="helplineTwo">PM-KISAN Helpline: 155261 or 011-24300606</div>
+          <div class="notice warn" data-i18n="helplineWarn">Always confirm financial decisions from official sources and local agriculture officers.</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3 class="section-title" data-i18n="checklistTitle">Field Checklist Before Sowing</h3>
+        <ul class="list-clean">
+          <li data-i18n="checklistOne">Test soil pH and basic NPK values from your field sample.</li>
+          <li data-i18n="checklistTwo">Check 5-day weather and avoid sowing before heavy rain windows.</li>
+          <li data-i18n="checklistThree">Choose seed variety suited for your region and sowing month.</li>
+          <li data-i18n="checklistFour">Confirm availability of fertilizer and irrigation schedule.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <p data-i18n="footerTitle">Farmers Friendly Smart Farming Assistant</p>
+      <p><span data-i18n="footerCopy">Built for practical field usage.</span> <span data-year></span></p>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabs" aria-label="Mobile navigation">
+    <a class="active" href="index.html" data-i18n="mobileHome">Home</a>
+    <a href="pages/crop_disease_detection.html" data-i18n="mobileDisease">Disease</a>
+    <a href="pages/weather_advisory.html" data-i18n="mobileWeather">Weather</a>
+    <a href="pages/soil_analysis_fertilizer_recommendations.html" data-i18n="mobileSoil">Soil</a>
+    <a href="pages/government_schemes_information.html" data-i18n="mobileSchemes">Schemes</a>
+  </nav>
+
+  <script>
+    (function () {
+      var i18n = {
+        en: {
+          brandTitle: "Farmers Friendly Smart Farming Assistant",
+          brandSubtitle: "Practical field support for daily farming decisions",
+          navOverview: "Overview",
+          navDashboard: "Dashboard",
+          navWeather: "Weather",
+          navSchemes: "Schemes",
+          languageLabel: "Choose language",
+          welcomeTitle: "One dashboard for field, market, and weather decisions",
+          welcomeCopy: "Use Farmers Friendly Agriculture to check disease risk from crop photos, estimate fertilizer plans from soil values, get weather-based advisories, shortlist suitable crops for the season, and track scheme benefits.",
+          openDashboard: "Open Farmer Dashboard",
+          checkWeather: "Check Weather First",
+          updatedLabel: "Last updated:",
+          visualBadge: "Daily Planning View",
+          todayTitle: "What you can do right now",
+          diseaseBadge: "Disease Check",
+          diseaseTitle: "Crop Disease Detection",
+          diseaseBody: "Upload a leaf photo, get likely disease, confidence level, and treatment plan.",
+          soilBadge: "Soil Plan",
+          soilTitle: "Soil + Fertilizer Recommendation",
+          soilBody: "Enter NPK and pH values to calculate soil score, nutrient status, and fertilizer estimate.",
+          seasonBadge: "Season Fit",
+          seasonTitle: "Seasonal Crop Suggestions",
+          seasonBody: "Filter crops by season, region, water availability, and budget for practical planning.",
+          galleryTitle: "Visual Advisory Shortcuts",
+          galleryWeatherTitle: "Weather Risk Watch",
+          galleryWeatherBody: "Generate 5-day operation advice before irrigation, spraying, and harvest scheduling.",
+          galleryDiseaseTitle: "Photo-based Plant Health",
+          galleryDiseaseBody: "Capture a leaf, review severity, and save reminders for follow-up spray or scouting.",
+          gallerySoilTitle: "Soil Action Planner",
+          gallerySoilBody: "Turn NPK and pH values into a clear fertilizer sequence and cost estimate.",
+          helplineTitle: "Farmer Helpline Snapshot",
+          helplineOne: "Kisan Call Center: 1800-180-1551 (toll-free)",
+          helplineTwo: "PM-KISAN Helpline: 155261 or 011-24300606",
+          helplineWarn: "Always confirm financial decisions from official sources and local agriculture officers.",
+          checklistTitle: "Field Checklist Before Sowing",
+          checklistOne: "Test soil pH and basic NPK values from your field sample.",
+          checklistTwo: "Check 5-day weather and avoid sowing before heavy rain windows.",
+          checklistThree: "Choose seed variety suited for your region and sowing month.",
+          checklistFour: "Confirm availability of fertilizer and irrigation schedule.",
+          footerTitle: "Farmers Friendly Smart Farming Assistant",
+          footerCopy: "Built for practical field usage.",
+          mobileHome: "Home",
+          mobileDisease: "Disease",
+          mobileWeather: "Weather",
+          mobileSoil: "Soil",
+          mobileSchemes: "Schemes",
+          toast: {
+            langSwitched: "Language switched"
+          }
+        },
+        hi: {},
+        te: {} 
+      };
+
+      var currentLanguage = "en";
+
+      function tr(key, params) {
+        return window.AgroAI.translate(i18n, key, currentLanguage, params);
+      }
+
+      function applyLanguage(language) {
+        currentLanguage = window.AgroAI.applyI18n(i18n, language);
+        document.querySelectorAll("[data-updated]").forEach(function (element) {
+          element.textContent = window.AgroAI.formatDate();
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var initialized = false;
+        window.AgroAI.setupLanguage("languageSelector", function (language) {
+          applyLanguage(language);
+          if (initialized) {
+            window.AgroAI.toast(tr("toast.langSwitched"), "success");
+          }
+          initialized = true;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soil Analysis and Fertilizer Plan - Farmers Friendly Smart Farming Assistant</title>
+  <meta name="description" content="Analyze NPK and pH levels to generate practical fertilizer recommendations and cost estimates." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <script defer src="../js/common.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark" aria-hidden="true">FF</div>
+        <div>
+          <h1 class="brand-title">Farmers Friendly Smart Farming Assistant Soil Planner</h1>
+          <p class="brand-subtitle">Nutrient diagnosis and fertilizer planning</p>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <nav class="nav-inline" aria-label="Feature navigation">
+          <a class="nav-link" href="language_selection_home_dashboard.html">Dashboard</a>
+          <a class="nav-link" href="crop_disease_detection.html">Disease</a>
+          <a class="nav-link" href="weather_advisory.html">Weather</a>
+          <a class="nav-link active" href="soil_analysis_fertilizer_recommendations.html">Soil</a>
+          <a class="nav-link" href="government_schemes_information.html">Schemes</a>
+        </nav>
+
+        <label class="visually-hidden" for="languageSelector">Choose language</label>
+        <select id="languageSelector" class="lang-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="te">Telugu</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    <section class="hero fade-up">
+      <div class="hero-grid">
+        <div>
+          <h2 id="pageTitle" class="hero-title">Soil Nutrient Analysis and Fertilizer Recommendation</h2>
+          <p id="pageSubtitle" class="hero-copy">
+            Enter soil test values and crop details to get a practical plan for NPK correction, expected cost, and implementation sequence.
+          </p>
+        </div>
+        <div class="kpi-grid">
+          <article class="kpi-card">
+            <p class="kpi-value">NPK + pH</p>
+            <p id="kpiOne" class="kpi-label">Supports core nutrient and acidity checks</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-value">Cost View</p>
+            <p id="kpiTwo" class="kpi-label">Instant estimate of fertilizer expenses</p>
+          </article>
+          <article class="kpi-card">
+            <p class="kpi-value">History</p>
+            <p id="kpiThree" class="kpi-label">Recent analyses saved on this device</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:70ms;">
+      <h3 class="section-title">Field Input Details</h3>
+      <div class="form-grid" style="margin-top:0.7rem;">
+        <div>
+          <label class="label" for="nitrogenInput">Nitrogen N (kg/ha)</label>
+          <input id="nitrogenInput" class="input" type="number" min="0" max="300" value="52" />
+        </div>
+        <div>
+          <label class="label" for="phosphorusInput">Phosphorus P (kg/ha)</label>
+          <input id="phosphorusInput" class="input" type="number" min="0" max="150" value="22" />
+        </div>
+        <div>
+          <label class="label" for="potassiumInput">Potassium K (kg/ha)</label>
+          <input id="potassiumInput" class="input" type="number" min="0" max="400" value="138" />
+        </div>
+        <div>
+          <label class="label" for="phInput">pH Level</label>
+          <input id="phInput" class="input" type="number" min="4" max="9" step="0.1" value="6.4" />
+        </div>
+        <div>
+          <label class="label" for="cropInput">Target Crop</label>
+          <select id="cropInput" class="select">
+            <option value="rice">Rice</option>
+            <option value="wheat">Wheat</option>
+            <option value="maize" selected>Maize</option>
+            <option value="cotton">Cotton</option>
+            <option value="chilli">Chilli</option>
+            <option value="tomato">Tomato</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="soilTypeInput">Soil Type</label>
+          <select id="soilTypeInput" class="select">
+            <option value="loam" selected>Loam</option>
+            <option value="clay">Clay</option>
+            <option value="sandy">Sandy</option>
+            <option value="black">Black cotton soil</option>
+            <option value="red">Red soil</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="areaInput">Field Area (acres)</label>
+          <input id="areaInput" class="input" type="number" min="0.1" step="0.1" value="2.0" />
+        </div>
+        <div>
+          <label class="label" for="irrigationInput">Irrigation Method</label>
+          <select id="irrigationInput" class="select">
+            <option value="drip">Drip</option>
+            <option value="sprinkler" selected>Sprinkler</option>
+            <option value="flood">Flood</option>
+            <option value="rainfed">Rain-fed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="inline" style="margin-top:0.9rem;">
+        <button id="analyzeBtn" class="btn btn-primary" type="button">Analyze Soil and Plan</button>
+        <span id="analysisState" class="badge info">Waiting for analysis</span>
+      </div>
+    </section>
+
+    <section id="resultsSection" class="card fade-up" style="margin-top:1rem; display:none;">
+      <div class="split">
+        <article class="card-link">
+          <h3 class="card-title">Soil Health Score</h3>
+          <p id="scoreText" style="font-size:1.8rem; margin:0.35rem 0 0.5rem; color:var(--soil-700); font-weight:800;">--</p>
+          <div class="progress">
+            <span id="scoreBar" style="width:0%;"></span>
+          </div>
+          <p id="scoreRemark" class="muted" style="margin:0.55rem 0 0;">Run analysis to view remark</p>
+        </article>
+
+        <article class="card-link">
+          <h3 class="card-title">Action Priority</h3>
+          <ul id="priorityList" class="list-clean" style="margin-top:0.45rem;"></ul>
+        </article>
+      </div>
+
+      <div class="card-grid two" style="margin-top:0.9rem;">
+        <article class="card-link">
+          <h4 class="card-title">Nutrient Status</h4>
+          <div class="table-wrap" style="margin-top:0.5rem;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nutrient</th>
+                  <th>Value</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="nutrientTableBody"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card-link">
+          <h4 class="card-title">Fertilizer Plan (Per Season)</h4>
+          <div class="table-wrap" style="margin-top:0.5rem;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Input</th>
+                  <th>Qty</th>
+                  <th>Est. Cost</th>
+                </tr>
+              </thead>
+              <tbody id="planTableBody"></tbody>
+            </table>
+          </div>
+          <p id="totalCostText" style="margin:0.7rem 0 0; font-weight:700; color:var(--soil-700);">Total estimated cost: --</p>
+        </article>
+      </div>
+
+      <div class="inline" style="margin-top:0.85rem;">
+        <button id="speakBtn" class="btn btn-ghost small" type="button">Play Audio Summary</button>
+        <button id="downloadBtn" class="btn btn-secondary small" type="button">Download Plan</button>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:150ms;">
+      <h3 class="section-title">Recent Analyses</h3>
+      <div id="historyWrap" class="empty-state">No analyses saved yet.</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <p>Farmers Friendly Smart Farming Assistant Soil Planner</p>
+      <p>Validate fertilizer dose with local experts for high-value crops. <span data-year></span></p>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabs" aria-label="Mobile navigation">
+    <a href="language_selection_home_dashboard.html">Home</a>
+    <a href="crop_disease_detection.html">Disease</a>
+    <a href="weather_advisory.html">Weather</a>
+    <a class="active" href="soil_analysis_fertilizer_recommendations.html">Soil</a>
+    <a href="government_schemes_information.html">Schemes</a>
+  </nav>
+
+  <script>
+    (function () {
+      var HISTORY_KEY = "agroai_soil_history";
+      var latestResult = null;
+
+      var translation = {
+        en: {
+          pageTitle: "Soil Nutrient Analysis and Fertilizer Recommendation",
+          pageSubtitle: "Enter soil test values and crop details to get a practical plan for NPK correction, expected cost, and implementation sequence.",
+          kpiOne: "Supports core nutrient and acidity checks",
+          kpiTwo: "Instant estimate of fertilizer expenses",
+          kpiThree: "Recent analyses saved on this device"
+        },
+        hi: {
+          pageTitle: "Mitti poshak vishleshan aur fertilizer plan",
+          pageSubtitle: "Soil test values aur crop details daal kar NPK correction aur estimated cost plan paaiye.",
+          kpiOne: "NPK aur pH jaise mukhya checks",
+          kpiTwo: "Turant kharch ka andaza",
+          kpiThree: "Recent analysis yahin device me save"
+        },
+        te: {
+          pageTitle: "Soil nutrient analysis mariyu fertilizer plan",
+          pageSubtitle: "Soil values mariyu crop details ivvandi, NPK correction mariyu cost estimate pondandi.",
+          kpiOne: "Mukhya NPK mariyu pH checks",
+          kpiTwo: "Ventane cost estimate",
+          kpiThree: "Recent analyses device lo save"
+        }
+      };
+
+      function applyLanguage(language) {
+        var text = translation[language] || translation.en;
+        Object.keys(text).forEach(function (id) {
+          var element = document.getElementById(id);
+          if (element) {
+            element.textContent = text[id];
+          }
+        });
+      }
+
+      function statusFor(value, min, max) {
+        if (value < min) {
+          return { label: "Deficient", className: "badge risk" };
+        }
+        if (value > max) {
+          return { label: "Excess", className: "badge warn" };
+        }
+        return { label: "Optimal", className: "badge good" };
+      }
+
+      function clamp(value, low, high) {
+        return Math.max(low, Math.min(high, value));
+      }
+
+      function runAnalysis() {
+        var values = {
+          n: Number(document.getElementById("nitrogenInput").value),
+          p: Number(document.getElementById("phosphorusInput").value),
+          k: Number(document.getElementById("potassiumInput").value),
+          ph: Number(document.getElementById("phInput").value),
+          crop: document.getElementById("cropInput").value,
+          soilType: document.getElementById("soilTypeInput").value,
+          area: Number(document.getElementById("areaInput").value),
+          irrigation: document.getElementById("irrigationInput").value
+        };
+
+        if (!values.area || values.area <= 0) {
+          window.AgroAI.toast("Enter a valid area", "error");
+          return;
+        }
+
+        var nStatus = statusFor(values.n, 45, 90);
+        var pStatus = statusFor(values.p, 20, 45);
+        var kStatus = statusFor(values.k, 120, 190);
+        var phStatus = statusFor(values.ph, 6.0, 7.5);
+
+        var score = 0;
+        [nStatus, pStatus, kStatus, phStatus].forEach(function (entry) {
+          if (entry.label === "Optimal") {
+            score += 25;
+          } else if (entry.label === "Excess") {
+            score += 18;
+          } else {
+            score += 14;
+          }
+        });
+        score = clamp(score, 0, 100);
+
+        var nNeed = Math.max(0, 80 - values.n) * values.area;
+        var pNeed = Math.max(0, 40 - values.p) * values.area;
+        var kNeed = Math.max(0, 170 - values.k) * values.area;
+        var phNeed = values.ph < 6 ? (6 - values.ph) * 250 * values.area : 0;
+
+        var plan = [
+          { name: "Urea", qty: Math.round(nNeed * 0.9), rate: 7 },
+          { name: "DAP", qty: Math.round(pNeed * 0.8), rate: 25 },
+          { name: "MOP", qty: Math.round(kNeed * 0.6), rate: 22 },
+          { name: "Compost/FYM", qty: Math.round(values.area * 1200), rate: 2.5 }
+        ];
+
+        if (phNeed > 0) {
+          plan.push({ name: "Lime/Gypsum", qty: Math.round(phNeed), rate: 4 });
+        }
+
+        var totalCost = plan.reduce(function (sum, item) {
+          return sum + (item.qty * item.rate);
+        }, 0);
+
+        var priorities = [];
+        if (nStatus.label !== "Optimal") {
+          priorities.push("Correct nitrogen imbalance through split dose schedule.");
+        }
+        if (pStatus.label !== "Optimal") {
+          priorities.push("Apply phosphorus at basal stage for root support.");
+        }
+        if (kStatus.label !== "Optimal") {
+          priorities.push("Balance potassium for stress tolerance and grain quality.");
+        }
+        if (phStatus.label !== "Optimal") {
+          priorities.push("Adjust pH gradually to improve nutrient uptake.");
+        }
+        priorities.push("Review irrigation timing to reduce nutrient leaching losses.");
+
+        latestResult = {
+          values: values,
+          score: score,
+          statuses: [nStatus, pStatus, kStatus, phStatus],
+          plan: plan,
+          totalCost: totalCost,
+          priorities: priorities,
+          createdAt: new Date().toISOString()
+        };
+
+        renderResult(latestResult);
+        persistHistory(latestResult);
+      }
+
+      function renderResult(result) {
+        document.getElementById("resultsSection").style.display = "block";
+        document.getElementById("analysisState").textContent = "Analysis complete";
+        document.getElementById("analysisState").className = "badge good";
+
+        document.getElementById("scoreText").textContent = result.score + " / 100";
+        document.getElementById("scoreBar").style.width = result.score + "%";
+        document.getElementById("scoreRemark").textContent = result.score >= 80 ? "Soil condition is good for planned crop." :
+          result.score >= 60 ? "Soil is workable but needs nutrient correction." :
+          "Soil health is weak. Apply corrective inputs before major investment.";
+
+        var priorityList = document.getElementById("priorityList");
+        priorityList.innerHTML = "";
+        result.priorities.forEach(function (line) {
+          var item = document.createElement("li");
+          item.textContent = line;
+          priorityList.appendChild(item);
+        });
+
+        var nutrientRows = [
+          { name: "Nitrogen (N)", value: result.values.n + " kg/ha", status: result.statuses[0] },
+          { name: "Phosphorus (P)", value: result.values.p + " kg/ha", status: result.statuses[1] },
+          { name: "Potassium (K)", value: result.values.k + " kg/ha", status: result.statuses[2] },
+          { name: "pH", value: result.values.ph.toFixed(1), status: result.statuses[3] }
+        ];
+
+        var nutrientBody = document.getElementById("nutrientTableBody");
+        nutrientBody.innerHTML = "";
+        nutrientRows.forEach(function (row) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = "<td>" + row.name + "</td><td>" + row.value + "</td><td><span class=\"" + row.status.className + "\">" + row.status.label + "</span></td>";
+          nutrientBody.appendChild(tr);
+        });
+
+        var planBody = document.getElementById("planTableBody");
+        planBody.innerHTML = "";
+        result.plan.forEach(function (item) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = "<td>" + item.name + "</td><td>" + item.qty + " kg</td><td>INR " + Math.round(item.qty * item.rate) + "</td>";
+          planBody.appendChild(tr);
+        });
+
+        document.getElementById("totalCostText").textContent = "Total estimated cost: INR " + Math.round(result.totalCost);
+        window.AgroAI.toast("Soil analysis completed", "success");
+      }
+
+      function persistHistory(result) {
+        var history = window.AgroAI.loadJSON(HISTORY_KEY, []);
+        history.unshift({
+          date: result.createdAt,
+          crop: result.values.crop,
+          area: result.values.area,
+          score: result.score,
+          cost: Math.round(result.totalCost)
+        });
+        history = history.slice(0, 6);
+        window.AgroAI.saveJSON(HISTORY_KEY, history);
+        renderHistory();
+      }
+
+      function renderHistory() {
+        var history = window.AgroAI.loadJSON(HISTORY_KEY, []);
+        var wrap = document.getElementById("historyWrap");
+        if (!history.length) {
+          wrap.className = "empty-state";
+          wrap.textContent = "No analyses saved yet.";
+          return;
+        }
+
+        wrap.className = "table-wrap";
+        var table = "<table class=\"table\"><thead><tr><th>Date</th><th>Crop</th><th>Area</th><th>Score</th><th>Est. Cost</th></tr></thead><tbody>";
+        history.forEach(function (item) {
+          table += "<tr><td>" + window.AgroAI.formatDate(item.date) + "</td><td>" + item.crop + "</td><td>" + item.area + " acre</td><td>" + item.score + "</td><td>INR " + item.cost + "</td></tr>";
+        });
+        table += "</tbody></table>";
+        wrap.innerHTML = table;
+      }
+
+      function speakSummary() {
+        if (!latestResult) {
+          window.AgroAI.toast("Run analysis first", "error");
+          return;
+        }
+
+        if (!("speechSynthesis" in window)) {
+          window.AgroAI.toast("Speech not supported on this browser", "error");
+          return;
+        }
+
+        var line = "Soil score " + latestResult.score + " out of 100. Estimated fertilizer cost INR " + Math.round(latestResult.totalCost) + ".";
+        var utterance = new SpeechSynthesisUtterance(line);
+        utterance.rate = 0.95;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }
+
+      function downloadPlan() {
+        if (!latestResult) {
+          window.AgroAI.toast("Run analysis first", "error");
+          return;
+        }
+
+        var lines = [
+          "Farmers Friendly Smart Farming Assistant Soil Analysis Report",
+          "Generated: " + window.AgroAI.formatDate(latestResult.createdAt),
+          "Crop: " + latestResult.values.crop,
+          "Area: " + latestResult.values.area + " acres",
+          "Soil score: " + latestResult.score + "/100",
+          "",
+          "Fertilizer plan:"
+        ];
+
+        latestResult.plan.forEach(function (item) {
+          lines.push("- " + item.name + ": " + item.qty + " kg | INR " + Math.round(item.qty * item.rate));
+        });
+
+        lines.push("");
+        lines.push("Total cost: INR " + Math.round(latestResult.totalCost));
+        lines.push("");
+        lines.push("Priority actions:");
+        latestResult.priorities.forEach(function (entry) {
+          lines.push("- " + entry);
+        });
+
+        var blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "agroai-soil-plan.txt";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        window.AgroAI.setupLanguage("languageSelector", applyLanguage);
+        document.getElementById("analyzeBtn").addEventListener("click", runAnalysis);
+        document.getElementById("speakBtn").addEventListener("click", speakSummary);
+        document.getElementById("downloadBtn").addEventListener("click", downloadPlan);
+        renderHistory();
+      });
+    })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmer Dashboard - Farmers Friendly Smart Farming Assistant</title>
+  <meta name="description" content="Farmer dashboard with quick access to weather, crop disease, soil analysis, crop suggestions, and scheme information." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <script defer src="../js/common.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark" aria-hidden="true">FF</div>
+        <div>
+          <h1 class="brand-title" data-i18n="brandTitle">Farmers Friendly Smart Farming Assistant Farmer Dashboard</h1>
+          <p class="brand-subtitle" data-i18n="brandSubtitle">Daily decision support for practical farming</p>
+        </div>
+      </a>
+      <div class="top-actions">
+        <nav class="nav-inline" aria-label="Dashboard navigation">
+          <a class="nav-link active" href="language_selection_home_dashboard.html" data-i18n="navDashboard">Dashboard</a>
+          <a class="nav-link" href="crop_disease_detection.html" data-i18n="navDisease">Disease</a>
+          <a class="nav-link" href="weather_advisory.html" data-i18n="navWeather">Weather</a>
+          <a class="nav-link" href="soil_analysis_fertilizer_recommendations.html" data-i18n="navSoil">Soil</a>
+          <a class="nav-link" href="government_schemes_information.html" data-i18n="navSchemes">Schemes</a>
+        </nav>
+        <label class="visually-hidden" for="languageSelector" data-i18n="languageLabel">Choose language</label>
+        <select id="languageSelector" class="lang-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="te">Telugu</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    <section class="hero fade-up">
+      <div class="hero-grid">
+        <div>
+          <h2 class="hero-title" data-i18n="dashTitle">Namaste, farmer. What is your priority for today?</h2>
+          <p class="hero-copy" data-i18n="dashCopy">Select any service below. Each module is designed for fast field usage with clear actions and no unnecessary complexity.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="weather_advisory.html" data-i18n="planWeatherBtn">Plan by Weather</a>
+            <a class="btn btn-ghost" href="crop_disease_detection.html" data-i18n="checkPlantBtn">Check Plant Health</a>
+          </div>
+        </div>
+        <article class="hero-media" aria-label="Farmer dashboard visual">
+          <img src="../public/images/farm_dashboard.svg" alt="Farmer dashboard overview and planning board" />
+          <span class="hero-media-badge" data-i18n="heroBadge">Action-first dashboard</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:70ms;">
+      <h3 class="section-title" data-i18n="servicesTitle">Core Farming Services</h3>
+      <div class="card-grid three">
+        <a class="card-link" href="crop_disease_detection.html"><p class="badge good">Photo Diagnosis</p><h4 class="card-title">Crop Disease Detection</h4><p class="card-body">Upload or capture crop images to get probable disease and treatment recommendations.</p></a>
+        <a class="card-link" href="weather_advisory.html"><p class="badge info">Risk Planning</p><h4 class="card-title">Weather Advisory</h4><p class="card-body">Generate crop-work advisories for irrigation, spraying, and harvest planning.</p></a>
+        <a class="card-link" href="soil_analysis_fertilizer_recommendations.html"><p class="badge warn">Input Optimization</p><h4 class="card-title">Soil and Fertilizer</h4><p class="card-body">Convert NPK and pH values into a practical fertilizer plan and cost estimate.</p></a>
+      </div>
+    </section>
+
+    <section class="card-grid two fade-up" style="margin-top:1rem; animation-delay:115ms;">
+      <article class="card">
+        <h3 class="section-title" data-i18n="emiTitle">Quick EMI Calculator</h3>
+        <div class="form-grid" style="margin-top:0.8rem;">
+          <div><label class="label" for="loanAmount" data-i18n="loanAmountLabel">Loan Amount (INR)</label><input class="input" id="loanAmount" type="number" min="0" step="1000" value="200000" /></div>
+          <div><label class="label" for="annualRate" data-i18n="annualRateLabel">Annual Interest (%)</label><input class="input" id="annualRate" type="number" min="0" step="0.1" value="8.5" /></div>
+          <div><label class="label" for="loanMonths" data-i18n="loanMonthsLabel">Tenure (months)</label><input class="input" id="loanMonths" type="number" min="1" step="1" value="24" /></div>
+        </div>
+        <div class="inline" style="margin-top:0.8rem;"><button id="calculateEmiBtn" class="btn btn-secondary small" type="button" data-i18n="calculateEmiBtn">Calculate EMI</button><span id="emiOutput" class="badge info" data-i18n="emiPending">EMI not calculated yet</span></div>
+      </article>
+
+      <article class="card">
+        <h3 class="section-title" data-i18n="notesTitle">Field Notes</h3>
+        <label class="label" for="fieldNotes" style="margin-top:0.8rem;" data-i18n="notesLabel">Today Notes</label>
+        <textarea id="fieldNotes" class="textarea" rows="7" data-i18n-placeholder="notesPlaceholder" placeholder="Example: Apply neem spray on north plot on Friday evening."></textarea>
+        <div class="inline" style="margin-top:0.8rem;"><button id="saveNotesBtn" class="btn btn-primary small" type="button" data-i18n="saveNotesBtn">Save Notes</button><button id="clearNotesBtn" class="btn btn-ghost small" type="button" data-i18n="clearBtn">Clear</button></div>
+      </article>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:160ms;">
+      <h3 class="section-title" data-i18n="tasksTitle">Farm Task Planner</h3>
+      <div class="form-grid" style="margin-top:0.75rem;">
+        <div><label class="label" for="taskTitleInput" data-i18n="taskTitleLabel">Task</label><input id="taskTitleInput" class="input" type="text" data-i18n-placeholder="taskPlaceholder" placeholder="Example: Arrange labor for weeding" /></div>
+        <div><label class="label" for="taskDateInput" data-i18n="taskDateLabel">Target Date</label><input id="taskDateInput" class="input" type="date" /></div>
+        <div><label class="label" for="taskPriorityInput" data-i18n="taskPriorityLabel">Priority</label><select id="taskPriorityInput" class="select"><option value="high" data-i18n="priorityHigh">High</option><option value="medium" data-i18n="priorityMedium">Medium</option><option value="low" data-i18n="priorityLow">Low</option></select></div>
+      </div>
+      <div class="inline" style="margin-top:0.8rem;"><button id="addTaskBtn" class="btn btn-primary small" type="button" data-i18n="addTaskBtn">Add Task</button><span id="taskState" class="badge info" data-i18n="taskStatePending">No pending task update</span></div>
+      <ul id="taskList" class="utility-list" style="margin-top:0.85rem;"></ul>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-grid"><p data-i18n="footerTitle">Farmers Friendly Smart Farming Assistant Farmer Dashboard</p><p><span data-i18n="footerCopy">Practical tools for daily decisions.</span> <span data-year></span></p></div></footer>
+  <nav class="mobile-tabs" aria-label="Mobile navigation"><a class="active" href="language_selection_home_dashboard.html" data-i18n="mobileHome">Home</a><a href="crop_disease_detection.html" data-i18n="mobileDisease">Disease</a><a href="weather_advisory.html" data-i18n="mobileWeather">Weather</a><a href="soil_analysis_fertilizer_recommendations.html" data-i18n="mobileSoil">Soil</a><a href="government_schemes_information.html" data-i18n="mobileSchemes">Schemes</a></nav>
+
+  <script>
+    (function () {
+      var NOTES_KEY = "agroai_field_notes";
+      var TASK_KEY = "agroai_tasks";
+      var currentLanguage = "en";
+      var tasks = [];
+
+      var i18n = {
+        en: {
+          brandTitle: "AgroAI Farmer Dashboard", brandSubtitle: "Daily decision support for practical farming", navDashboard: "Dashboard", navDisease: "Disease", navWeather: "Weather", navSoil: "Soil", navSchemes: "Schemes", languageLabel: "Choose language", dashTitle: "Namaste, farmer. What is your priority for today?", dashCopy: "Select any service below. Each module is designed for fast field usage with clear actions.", planWeatherBtn: "Plan by Weather", checkPlantBtn: "Check Plant Health", heroBadge: "Action-first dashboard", servicesTitle: "Core Farming Services", emiTitle: "Quick EMI Calculator", loanAmountLabel: "Loan Amount (INR)", annualRateLabel: "Annual Interest (%)", loanMonthsLabel: "Tenure (months)", calculateEmiBtn: "Calculate EMI", emiPending: "EMI not calculated yet", notesTitle: "Field Notes", notesLabel: "Today Notes", notesPlaceholder: "Example: Apply neem spray on north plot on Friday evening.", saveNotesBtn: "Save Notes", clearBtn: "Clear", tasksTitle: "Farm Task Planner", taskTitleLabel: "Task", taskDateLabel: "Target Date", taskPriorityLabel: "Priority", taskPlaceholder: "Example: Arrange labor for weeding", priorityHigh: "High", priorityMedium: "Medium", priorityLow: "Low", addTaskBtn: "Add Task", taskStatePending: "No pending task update", taskEmpty: "No tasks added yet.", footerTitle: "AgroAI Farmer Dashboard", footerCopy: "Practical tools for daily decisions.", mobileHome: "Home", mobileDisease: "Disease", mobileWeather: "Weather", mobileSoil: "Soil", mobileSchemes: "Schemes", toastLang: "Language switched", toastEmi: "Enter valid amount and tenure", toastNotesSaved: "Field notes saved", toastNotesClear: "Field notes cleared", toastTask: "Enter a task and date", toastTaskAdd: "Task added", toastTaskRemove: "Task removed", emiOut: "Estimated EMI: INR {amount} per month", done: "Done", undo: "Undo", remove: "Remove", meta: "Due {date} | Priority: {priority}"
+        },
+        hi: {},
+        te: {} 
+      };
+
+      function tr(key, params) {
+        return window.AgroAI.translate(i18n, key, currentLanguage, params);
+      }
+
+      function formatDateOnly(value) {
+        if (!value) {
+          return "--";
+        }
+        var date = new Date(value + "T00:00:00");
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+        return date.toLocaleDateString(window.AgroAI.getLocale(currentLanguage), { day: "2-digit", month: "short" });
+      }
+
+      function priorityLabel(priority) {
+        return priority === "high" ? tr("priorityHigh") : priority === "low" ? tr("priorityLow") : tr("priorityMedium");
+      }
+
+      function loadTasks() {
+        tasks = window.AgroAI.loadJSON(TASK_KEY, []);
+        if (!Array.isArray(tasks)) {
+          tasks = [];
+        }
+      }
+
+      function saveTasks() {
+        window.AgroAI.saveJSON(TASK_KEY, tasks);
+      }
+
+      function renderTasks() {
+        var list = document.getElementById("taskList");
+        list.innerHTML = "";
+
+        if (!tasks.length) {
+          list.innerHTML = "<li class=\"empty-state\">" + tr("taskEmpty") + "</li>";
+          return;
+        }
+
+        tasks.forEach(function (task) {
+          var item = document.createElement("li");
+          item.className = "utility-item";
+
+          var strong = document.createElement("strong");
+          strong.textContent = task.title;
+
+          var meta = document.createElement("span");
+          meta.className = "meta";
+          meta.textContent = tr("meta", { date: formatDateOnly(task.date), priority: priorityLabel(task.priority) });
+
+          var actions = document.createElement("div");
+          actions.className = "utility-actions";
+
+          var doneBtn = document.createElement("button");
+          doneBtn.className = "btn btn-ghost small";
+          doneBtn.type = "button";
+          doneBtn.textContent = task.done ? tr("undo") : tr("done");
+          doneBtn.addEventListener("click", function () {
+            task.done = !task.done;
+            saveTasks();
+            renderTasks();
+          });
+
+          var removeBtn = document.createElement("button");
+          removeBtn.className = "btn btn-danger small";
+          removeBtn.type = "button";
+          removeBtn.textContent = tr("remove");
+          removeBtn.addEventListener("click", function () {
+            tasks = tasks.filter(function (entry) {
+              return entry.id !== task.id;
+            });
+            saveTasks();
+            renderTasks();
+            document.getElementById("taskState").textContent = tr("toastTaskRemove");
+            document.getElementById("taskState").className = "badge warn";
+            window.AgroAI.toast(tr("toastTaskRemove"), "info");
+          });
+
+          actions.appendChild(doneBtn);
+          actions.appendChild(removeBtn);
+          item.appendChild(strong);
+          item.appendChild(meta);
+          item.appendChild(actions);
+          list.appendChild(item);
+        });
+      }
+
+      function addTask() {
+        var title = document.getElementById("taskTitleInput").value.trim();
+        var date = document.getElementById("taskDateInput").value;
+        var priority = document.getElementById("taskPriorityInput").value;
+
+        if (!title || !date) {
+          window.AgroAI.toast(tr("toastTask"), "error");
+          return;
+        }
+
+        tasks.unshift({
+          id: String(Date.now()) + "_" + Math.floor(Math.random() * 1000),
+          title: title,
+          date: date,
+          priority: priority,
+          done: false
+        });
+        tasks = tasks.slice(0, 20);
+        saveTasks();
+        renderTasks();
+
+        document.getElementById("taskTitleInput").value = "";
+        document.getElementById("taskState").textContent = tr("toastTaskAdd");
+        document.getElementById("taskState").className = "badge good";
+        window.AgroAI.toast(tr("toastTaskAdd"), "success");
+      }
+
+      function calculateEmi() {
+        var principal = Number(document.getElementById("loanAmount").value);
+        var annualRate = Number(document.getElementById("annualRate").value);
+        var months = Number(document.getElementById("loanMonths").value);
+
+        if (!principal || !months || months < 1) {
+          window.AgroAI.toast(tr("toastEmi"), "error");
+          return;
+        }
+
+        var monthlyRate = annualRate / 12 / 100;
+        var emi;
+
+        if (monthlyRate === 0) {
+          emi = principal / months;
+        } else {
+          var factor = Math.pow(1 + monthlyRate, months);
+          emi = (principal * monthlyRate * factor) / (factor - 1);
+        }
+
+        var output = document.getElementById("emiOutput");
+        output.textContent = tr("emiOut", { amount: emi.toFixed(0) });
+        output.className = "badge good";
+      }
+
+      function saveNotes() {
+        var notes = document.getElementById("fieldNotes").value.trim();
+        window.AgroAI.saveJSON(NOTES_KEY, { text: notes, updatedAt: new Date().toISOString() });
+        window.AgroAI.toast(tr("toastNotesSaved"), "success");
+      }
+
+      function clearNotes() {
+        document.getElementById("fieldNotes").value = "";
+        window.AgroAI.saveJSON(NOTES_KEY, { text: "", updatedAt: new Date().toISOString() });
+        window.AgroAI.toast(tr("toastNotesClear"), "info");
+      }
+
+      function loadNotes() {
+        var saved = window.AgroAI.loadJSON(NOTES_KEY, { text: "" });
+        if (saved && typeof saved.text === "string") {
+          document.getElementById("fieldNotes").value = saved.text;
+        }
+      }
+
+      function applyLanguage(language) {
+        currentLanguage = window.AgroAI.applyI18n(i18n, language);
+        renderTasks();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var initialized = false;
+        document.getElementById("taskDateInput").value = new Date().toISOString().slice(0, 10);
+
+        loadTasks();
+        loadNotes();
+
+        window.AgroAI.setupLanguage("languageSelector", function (language) {
+          applyLanguage(language);
+          if (initialized) {
+            window.AgroAI.toast(tr("toastLang"), "success");
+          }
+          initialized = true;
+        });
+
+        document.getElementById("calculateEmiBtn").addEventListener("click", calculateEmi);
+        document.getElementById("saveNotesBtn").addEventListener("click", saveNotes);
+        document.getElementById("clearNotesBtn").addEventListener("click", clearNotes);
+        document.getElementById("addTaskBtn").addEventListener("click", addTask);
+
+        renderTasks();
+      });
+    })();
+  </script>
+</body>
+</html>
+
+

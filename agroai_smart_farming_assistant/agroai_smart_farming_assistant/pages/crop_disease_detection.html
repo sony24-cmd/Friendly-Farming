@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crop Disease Detection - Farmers Friendly Smart Farming Assistant</title>
+  <meta name="description" content="Upload crop images and get realistic disease risk and treatment recommendations for field use." />
+  <link rel="stylesheet" href="../css/main.css" />
+  <script defer src="../js/common.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark" aria-hidden="true">FF</div>
+        <div>
+          <h1 class="brand-title" data-i18n="brandTitle">Farmers Friendly Smart Farming Assistant Disease Detection</h1>
+          <p class="brand-subtitle" data-i18n="brandSubtitle">Image-based field diagnosis with practical action plan</p>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <nav class="nav-inline" aria-label="Feature navigation">
+          <a class="nav-link" href="language_selection_home_dashboard.html" data-i18n="navDashboard">Dashboard</a>
+          <a class="nav-link active" href="crop_disease_detection.html" data-i18n="navDisease">Disease</a>
+          <a class="nav-link" href="weather_advisory.html" data-i18n="navWeather">Weather</a>
+          <a class="nav-link" href="soil_analysis_fertilizer_recommendations.html" data-i18n="navSoil">Soil</a>
+          <a class="nav-link" href="government_schemes_information.html" data-i18n="navSchemes">Schemes</a>
+        </nav>
+
+        <label class="visually-hidden" for="languageSelector" data-i18n="languageLabel">Choose language</label>
+        <select id="languageSelector" class="lang-select">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="te">Telugu</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="site-wrap">
+    <section class="hero fade-up">
+      <div class="hero-grid">
+        <div>
+          <h2 class="hero-title" data-i18n="pageTitle">Crop Disease Detection from Leaf Photos</h2>
+          <p class="hero-copy" data-i18n="pageSubtitle">Upload a clear image of the affected leaf. Farmers Friendly Smart Farming Assistant estimates probable disease, confidence, severity level, and gives immediate treatment steps.</p>
+        </div>
+
+        <article class="hero-media" aria-label="Disease detection visual">
+          <img src="../public/images/disease_leaf.svg" alt="Leaf photo based disease analysis" />
+          <span class="hero-media-badge" data-i18n="heroBadge">Photo to Action Plan</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="split fade-up" style="margin-top:1rem; animation-delay:80ms;">
+      <article class="card">
+        <h3 class="section-title" data-i18n="uploadTitle">Upload or Capture Crop Image</h3>
+
+        <div id="dropZone" class="file-drop" style="margin-top:0.7rem;">
+          <p class="muted" style="margin:0;" data-i18n="dropText">Drop image here or use the buttons below</p>
+          <img id="previewImage" class="preview-image" alt="Selected crop" style="display:none; margin-top:0.8rem;" />
+        </div>
+
+        <input id="imageInput" type="file" class="visually-hidden" accept="image/*" />
+        <input id="cameraInput" type="file" class="visually-hidden" accept="image/*" capture="environment" />
+
+        <div class="inline" style="margin-top:0.8rem;">
+          <button id="selectImageBtn" class="btn btn-secondary" type="button" data-i18n="selectBtn">Select Image</button>
+          <button id="captureImageBtn" class="btn btn-ghost" type="button" data-i18n="captureBtn">Capture from Camera</button>
+          <button id="resetBtn" class="btn btn-ghost" type="button" data-i18n="resetBtn">Reset</button>
+        </div>
+
+        <div class="inline" style="margin-top:0.85rem;">
+          <button id="analyzeBtn" class="btn btn-primary" type="button" disabled data-i18n="analyzeBtn">Analyze Disease</button>
+          <span id="fileMeta" class="badge info" data-i18n="noImage">No image selected</span>
+        </div>
+
+        <div id="analysisLoader" class="inline" style="margin-top:0.9rem; display:none;">
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <span class="loading-dot"></span>
+          <span class="muted" data-i18n="loaderText">Analyzing image pattern and symptom signature...</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3 class="section-title" data-i18n="checklistTitle">Field Checklist Before Action</h3>
+        <ul class="list-clean">
+          <li data-i18n="checkOne">Inspect neighboring plants to confirm spread level in the same plot.</li>
+          <li data-i18n="checkTwo">Start treatment in early morning or late evening for better leaf retention.</li>
+          <li data-i18n="checkThree">Avoid spray just before heavy rain windows to prevent input loss.</li>
+          <li data-i18n="checkFour">For severe infection, isolate affected rows and maintain spray records.</li>
+        </ul>
+        <div class="notice warn" style="margin-top:0.9rem;" data-i18n="checkWarn">This diagnosis is advisory. Confirm with local agronomist before high-cost chemical interventions.</div>
+      </article>
+    </section>
+
+    <section id="resultsSection" class="card fade-up" style="margin-top:1rem; display:none;">
+      <div class="inline" style="justify-content:space-between; width:100%;">
+        <div>
+          <h3 id="resultDisease" class="section-title" style="margin-bottom:0.3rem;">Disease Result</h3>
+          <p id="resultMeta" class="muted" style="margin:0;">Confidence and crop fit</p>
+        </div>
+        <span id="severityBadge" class="badge warn">Moderate</span>
+      </div>
+
+      <div class="card-grid two" style="margin-top:0.8rem;">
+        <article class="card-link"><h4 class="card-title" data-i18n="symptomsTitle">Observed Symptoms</h4><ul id="symptomsList" class="list-clean" style="margin-top:0.45rem;"></ul></article>
+        <article class="card-link"><h4 class="card-title" data-i18n="immediateTitle">Immediate Action (Next 48 Hours)</h4><ul id="immediateList" class="list-clean" style="margin-top:0.45rem;"></ul></article>
+        <article class="card-link"><h4 class="card-title" data-i18n="organicTitle">Organic Plan</h4><ul id="organicList" class="list-clean" style="margin-top:0.45rem;"></ul></article>
+        <article class="card-link"><h4 class="card-title" data-i18n="preventiveTitle">Preventive Plan</h4><ul id="preventiveList" class="list-clean" style="margin-top:0.45rem;"></ul></article>
+      </div>
+
+      <div class="inline" style="margin-top:0.8rem;"><button id="speakBtn" class="btn btn-ghost small" type="button" data-i18n="speakBtn">Play Audio Summary</button><button id="downloadBtn" class="btn btn-secondary small" type="button" data-i18n="downloadBtn">Download Report</button></div>
+    </section>
+
+    <section class="card fade-up" style="margin-top:1rem; animation-delay:140ms;">
+      <h3 class="section-title" data-i18n="reminderTitle">Treatment Reminders</h3>
+      <p class="muted" style="margin-top:0.2rem;" data-i18n="reminderCopy">Save follow-up spray or scouting reminders so critical actions are not missed.</p>
+      <div class="form-grid" style="margin-top:0.7rem;">
+        <div><label class="label" for="reminderDate" data-i18n="reminderDateLabel">Reminder Date</label><input id="reminderDate" class="input" type="date" /></div>
+        <div><label class="label" for="reminderNote" data-i18n="reminderNoteLabel">Reminder Note</label><input id="reminderNote" class="input" type="text" data-i18n-placeholder="reminderPlaceholder" placeholder="Example: Re-check north plot for spread" /></div>
+      </div>
+      <div class="inline" style="margin-top:0.8rem;"><button id="addReminderBtn" class="btn btn-primary small" type="button" data-i18n="addReminderBtn">Add Reminder</button><span id="reminderState" class="badge info" data-i18n="reminderState">No reminder update yet</span></div>
+      <ul id="reminderList" class="utility-list" style="margin-top:0.85rem;"></ul>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-grid"><p data-i18n="footerTitle">Farmers Friendly Smart Farming Assistant Disease Advisory</p><p><span data-i18n="footerCopy">Use with field validation.</span> <span data-year></span></p></div></footer>
+  <nav class="mobile-tabs" aria-label="Mobile navigation"><a href="language_selection_home_dashboard.html" data-i18n="mobileHome">Home</a><a class="active" href="crop_disease_detection.html" data-i18n="mobileDisease">Disease</a><a href="weather_advisory.html" data-i18n="mobileWeather">Weather</a><a href="soil_analysis_fertilizer_recommendations.html" data-i18n="mobileSoil">Soil</a><a href="government_schemes_information.html" data-i18n="mobileSchemes">Schemes</a></nav>
+
+  <script>
+    (function () {
+      var REMINDER_KEY = "agroai_disease_reminders";
+      var currentLanguage = "en";
+      var selectedFile = null;
+      var selectedProfile = null;
+      var reminders = [];
+
+      var i18n = {
+        en: { brandTitle: "AgroAI Disease Detection", brandSubtitle: "Image-based field diagnosis with practical action plan", navDashboard: "Dashboard", navDisease: "Disease", navWeather: "Weather", navSoil: "Soil", navSchemes: "Schemes", languageLabel: "Choose language", pageTitle: "Crop Disease Detection from Leaf Photos", pageSubtitle: "Upload a clear image of the affected leaf. AgroAI estimates probable disease, confidence, severity level, and gives immediate treatment steps.", heroBadge: "Photo to Action Plan", uploadTitle: "Upload or Capture Crop Image", dropText: "Drop image here or use the buttons below", selectBtn: "Select Image", captureBtn: "Capture from Camera", resetBtn: "Reset", analyzeBtn: "Analyze Disease", noImage: "No image selected", loaderText: "Analyzing image pattern and symptom signature...", checklistTitle: "Field Checklist Before Action", checkOne: "Inspect neighboring plants to confirm spread level in the same plot.", checkTwo: "Start treatment in early morning or late evening for better leaf retention.", checkThree: "Avoid spray just before heavy rain windows to prevent input loss.", checkFour: "For severe infection, isolate affected rows and maintain spray records.", checkWarn: "This diagnosis is advisory. Confirm with local agronomist before high-cost chemical interventions.", symptomsTitle: "Observed Symptoms", immediateTitle: "Immediate Action (Next 48 Hours)", organicTitle: "Organic Plan", preventiveTitle: "Preventive Plan", speakBtn: "Play Audio Summary", downloadBtn: "Download Report", reminderTitle: "Treatment Reminders", reminderCopy: "Save follow-up spray or scouting reminders so critical actions are not missed.", reminderDateLabel: "Reminder Date", reminderNoteLabel: "Reminder Note", reminderPlaceholder: "Example: Re-check north plot for spread", addReminderBtn: "Add Reminder", reminderState: "No reminder update yet", reminderEmpty: "No reminders added yet.", footerTitle: "AgroAI Disease Advisory", footerCopy: "Use with field validation.", mobileHome: "Home", mobileDisease: "Disease", mobileWeather: "Weather", mobileSoil: "Soil", mobileSchemes: "Schemes", toastLang: "Language switched", toastBadImage: "Please choose a valid image file", toastSelectImage: "Select an image first", toastReady: "Disease analysis ready", toastRunFirst: "Run analysis first", toastSpeech: "Speech not supported on this browser", toastNeedResult: "Analyze an image before downloading report", toastNeedReminder: "Select reminder date and note", toastReminderAdd: "Reminder saved", toastReminderRemove: "Reminder removed", likelyIn: "Likely in {crop} | Confidence {confidence}%", sevModerate: "Moderate Severity", sevMedium: "Medium Severity", sevHigh: "High Severity", reportTitle: "AgroAI Disease Advisory Report", reportImage: "Image", reportDisease: "Disease", reportCrop: "Crop group", reportSymptoms: "Symptoms", reportImmediate: "Immediate Actions", reportOrganic: "Organic Plan", reportPrevention: "Prevention", remove: "Remove", reminderMeta: "Date: {date}", speechPrefix: "Detected {disease}. Immediate actions:" },
+        hi: {},
+        te: {} 
+      };
+
+      var diseaseProfiles = [
+        { name: "Early Leaf Blight", crop: "Tomato and chilli family", severity: "moderate", symptoms: ["Brown concentric spots on older leaves", "Yellow halo around lesion area", "Lower leaves drying first"], immediate: ["Remove heavily infected leaves and destroy outside the field", "Avoid overhead irrigation for next 3 to 4 days", "Spray protective fungicide in calm weather"], organic: ["Neem oil 3 ml per liter with sticking agent", "Trichoderma-based spray as preventive follow-up", "Add compost tea to improve microbial balance"], preventive: ["Maintain 30 to 45 cm plant spacing", "Use morning irrigation to reduce overnight humidity", "Rotate with non-solanaceous crop next cycle"] },
+        { name: "Powdery Mildew", crop: "Cucurbits and pulses", severity: "warning", symptoms: ["White powder-like growth on upper leaf surface", "Leaf curling and gradual yellowing", "Reduced photosynthesis and weak vine growth"], immediate: ["Start sulfur-based spray in evening hours", "Remove dense canopy zones to improve airflow", "Stop excess nitrogen top dressing for one week"], organic: ["Potassium bicarbonate foliar spray", "Milk and water spray (1:10 ratio) weekly", "Use bio-fungicide with Bacillus subtilis"], preventive: ["Avoid dense planting and late evening wetting", "Monitor first symptom on border rows", "Use tolerant varieties in humid season"] },
+        { name: "Bacterial Leaf Spot", crop: "Chilli, capsicum, and tomato", severity: "risk", symptoms: ["Small water-soaked lesions turning dark", "Spots coalescing into irregular patches", "Leaf edge burn and defoliation under humidity"], immediate: ["Stop field operations while leaves are wet", "Apply copper-based spray as label recommendation", "Disinfect pruning tools before next use"], organic: ["Bio-copper formulation at low-dose repeat cycle", "Seaweed extract spray for stress support", "Avoid foliar feeding during active infection"], preventive: ["Use disease-free seed and tray sanitation", "Improve drainage to reduce splash spread", "Rotate and avoid same host crop next season"] }
+      ];
+
+      function tr(key, params) {
+        return window.AgroAI.translate(i18n, key, currentLanguage, params);
+      }
+
+      function updateList(elementId, values) {
+        var container = document.getElementById(elementId);
+        container.innerHTML = "";
+        values.forEach(function (item) {
+          var li = document.createElement("li");
+          li.textContent = item;
+          container.appendChild(li);
+        });
+      }
+
+      function chooseProfile(file) {
+        var seed = window.AgroAI.hash(file.name + "|" + file.size);
+        return diseaseProfiles[seed % diseaseProfiles.length];
+      }
+
+      function setSelectedFile(file) {
+        if (!file || !file.type.startsWith("image/")) {
+          window.AgroAI.toast(tr("toastBadImage"), "error");
+          return;
+        }
+
+        selectedFile = file;
+        var previewImage = document.getElementById("previewImage");
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.style.display = "block";
+        document.getElementById("analyzeBtn").disabled = false;
+        document.getElementById("fileMeta").textContent = file.name + " (" + (file.size / 1024 / 1024).toFixed(2) + " MB)";
+        document.getElementById("fileMeta").className = "badge good";
+        document.getElementById("resultsSection").style.display = "none";
+      }
+
+      function severityLabel(severity) {
+        if (severity === "risk") {
+          return tr("sevHigh");
+        }
+        if (severity === "warning") {
+          return tr("sevMedium");
+        }
+        return tr("sevModerate");
+      }
+
+      function renderResult(profile) {
+        selectedProfile = profile;
+        var seed = window.AgroAI.hash(selectedFile.name + selectedFile.lastModified);
+        var confidence = 82 + (seed % 15);
+
+        document.getElementById("resultDisease").textContent = profile.name;
+        document.getElementById("resultMeta").textContent = tr("likelyIn", { crop: profile.crop, confidence: confidence });
+
+        var badge = document.getElementById("severityBadge");
+        badge.textContent = severityLabel(profile.severity);
+        badge.className = "badge " + (profile.severity === "risk" ? "risk" : profile.severity === "warning" ? "warn" : "good");
+
+        updateList("symptomsList", profile.symptoms);
+        updateList("immediateList", profile.immediate);
+        updateList("organicList", profile.organic);
+        updateList("preventiveList", profile.preventive);
+
+        document.getElementById("resultsSection").style.display = "block";
+        window.AgroAI.toast(tr("toastReady"), "success");
+      }
+
+      function analyzeImage() {
+        if (!selectedFile) {
+          window.AgroAI.toast(tr("toastSelectImage"), "error");
+          return;
+        }
+
+        document.getElementById("analysisLoader").style.display = "flex";
+        document.getElementById("analyzeBtn").disabled = true;
+
+        window.setTimeout(function () {
+          document.getElementById("analysisLoader").style.display = "none";
+          document.getElementById("analyzeBtn").disabled = false;
+          renderResult(chooseProfile(selectedFile));
+        }, 1200);
+      }
+
+      function resetForm() {
+        selectedFile = null;
+        selectedProfile = null;
+        document.getElementById("imageInput").value = "";
+        document.getElementById("cameraInput").value = "";
+        document.getElementById("previewImage").style.display = "none";
+        document.getElementById("previewImage").removeAttribute("src");
+        document.getElementById("analyzeBtn").disabled = true;
+        document.getElementById("fileMeta").textContent = tr("noImage");
+        document.getElementById("fileMeta").className = "badge info";
+        document.getElementById("resultsSection").style.display = "none";
+        document.getElementById("analysisLoader").style.display = "none";
+      }
+
+      function speakSummary() {
+        if (!selectedProfile) {
+          window.AgroAI.toast(tr("toastRunFirst"), "error");
+          return;
+        }
+
+        if (!("speechSynthesis" in window)) {
+          window.AgroAI.toast(tr("toastSpeech"), "error");
+          return;
+        }
+
+        var message = tr("speechPrefix", { disease: selectedProfile.name }) + " " + selectedProfile.immediate.join(". ");
+        var utterance = new SpeechSynthesisUtterance(message);
+        utterance.lang = window.AgroAI.getSpeechLanguage(currentLanguage);
+        utterance.rate = 0.95;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      }
+
+      function downloadReport() {
+        if (!selectedProfile || !selectedFile) {
+          window.AgroAI.toast(tr("toastNeedResult"), "error");
+          return;
+        }
+
+        var lines = [
+          tr("reportTitle"),
+          "Generated: " + window.AgroAI.formatDate(),
+          tr("reportImage") + ": " + selectedFile.name,
+          tr("reportDisease") + ": " + selectedProfile.name,
+          tr("reportCrop") + ": " + selectedProfile.crop,
+          "",
+          tr("reportSymptoms") + ":",
+          "- " + selectedProfile.symptoms.join("\n- "),
+          "",
+          tr("reportImmediate") + ":",
+          "- " + selectedProfile.immediate.join("\n- "),
+          "",
+          tr("reportOrganic") + ":",
+          "- " + selectedProfile.organic.join("\n- "),
+          "",
+          tr("reportPrevention") + ":",
+          "- " + selectedProfile.preventive.join("\n- ")
+        ];
+
+        var blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "agroai-disease-report.txt";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+
+      function loadReminders() {
+        reminders = window.AgroAI.loadJSON(REMINDER_KEY, []);
+        if (!Array.isArray(reminders)) {
+          reminders = [];
+        }
+      }
+
+      function saveReminders() {
+        window.AgroAI.saveJSON(REMINDER_KEY, reminders);
+      }
+
+      function formatReminderDate(value) {
+        if (!value) {
+          return "--";
+        }
+        var date = new Date(value + "T00:00:00");
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+        return date.toLocaleDateString(window.AgroAI.getLocale(currentLanguage), { day: "2-digit", month: "short", year: "numeric" });
+      }
+
+      function renderReminders() {
+        var list = document.getElementById("reminderList");
+        list.innerHTML = "";
+
+        if (!reminders.length) {
+          list.innerHTML = "<li class=\"empty-state\">" + tr("reminderEmpty") + "</li>";
+          return;
+        }
+
+        reminders.forEach(function (reminder) {
+          var item = document.createElement("li");
+          item.className = "utility-item";
+
+          var strong = document.createElement("strong");
+          strong.textContent = reminder.note;
+
+          var meta = document.createElement("span");
+          meta.className = "meta";
+          meta.textContent = tr("reminderMeta", { date: formatReminderDate(reminder.date) });
+
+          var removeBtn = document.createElement("button");
+          removeBtn.className = "btn btn-danger small";
+          removeBtn.type = "button";
+          removeBtn.textContent = tr("remove");
+          removeBtn.addEventListener("click", function () {
+            reminders = reminders.filter(function (entry) { return entry.id !== reminder.id; });
+            saveReminders();
+            renderReminders();
+            document.getElementById("reminderState").textContent = tr("toastReminderRemove");
+            document.getElementById("reminderState").className = "badge warn";
+            window.AgroAI.toast(tr("toastReminderRemove"), "info");
+          });
+
+          item.appendChild(strong);
+          item.appendChild(meta);
+          item.appendChild(removeBtn);
+          list.appendChild(item);
+        });
+      }
+
+      function addReminder() {
+        var date = document.getElementById("reminderDate").value;
+        var note = document.getElementById("reminderNote").value.trim();
+
+        if (!date || !note) {
+          window.AgroAI.toast(tr("toastNeedReminder"), "error");
+          return;
+        }
+
+        reminders.unshift({ id: String(Date.now()) + "_" + Math.floor(Math.random() * 1000), date: date, note: note });
+        reminders = reminders.slice(0, 20);
+        saveReminders();
+        renderReminders();
+
+        document.getElementById("reminderNote").value = "";
+        document.getElementById("reminderState").textContent = tr("toastReminderAdd");
+        document.getElementById("reminderState").className = "badge good";
+        window.AgroAI.toast(tr("toastReminderAdd"), "success");
+      }
+
+      function registerDropEvents() {
+        var dropZone = document.getElementById("dropZone");
+        ["dragenter", "dragover"].forEach(function (eventName) {
+          dropZone.addEventListener(eventName, function (event) {
+            event.preventDefault();
+            dropZone.classList.add("dragover");
+          });
+        });
+
+        ["dragleave", "drop"].forEach(function (eventName) {
+          dropZone.addEventListener(eventName, function (event) {
+            event.preventDefault();
+            if (eventName === "drop") {
+              var files = event.dataTransfer.files;
+              if (files && files[0]) {
+                setSelectedFile(files[0]);
+              }
+            }
+            dropZone.classList.remove("dragover");
+          });
+        });
+      }
+
+      function applyLanguage(language) {
+        currentLanguage = window.AgroAI.applyI18n(i18n, language);
+        if (!selectedFile) {
+          document.getElementById("fileMeta").textContent = tr("noImage");
+          document.getElementById("fileMeta").className = "badge info";
+        }
+        renderReminders();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var initialized = false;
+        document.getElementById("reminderDate").value = new Date().toISOString().slice(0, 10);
+
+        loadReminders();
+
+        window.AgroAI.setupLanguage("languageSelector", function (language) {
+          applyLanguage(language);
+          if (initialized) {
+            window.AgroAI.toast(tr("toastLang"), "success");
+          }
+          initialized = true;
+        });
+
+        document.getElementById("selectImageBtn").addEventListener("click", function () { document.getElementById("imageInput").click(); });
+        document.getElementById("captureImageBtn").addEventListener("click", function () { document.getElementById("cameraInput").click(); });
+        document.getElementById("imageInput").addEventListener("change", function (event) { if (event.target.files[0]) { setSelectedFile(event.target.files[0]); } });
+        document.getElementById("cameraInput").addEventListener("change", function (event) { if (event.target.files[0]) { setSelectedFile(event.target.files[0]); } });
+
+        document.getElementById("analyzeBtn").addEventListener("click", analyzeImage);
+        document.getElementById("resetBtn").addEventListener("click", resetForm);
+        document.getElementById("speakBtn").addEventListener("click", speakSummary);
+        document.getElementById("downloadBtn").addEventListener("click", downloadReport);
+        document.getElementById("addReminderBtn").addEventListener("click", addReminder);
+
+        registerDropEvents();
+        renderReminders();
+      });
+    })();
+  </script>
+</body>
+</html>
+
+

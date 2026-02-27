@@ -1,0 +1,25 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Government scheme support illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e9f5ff"/>
+      <stop offset="100%" stop-color="#fef4e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect x="120" y="128" width="960" height="444" rx="34" fill="#ffffff" stroke="#d6d9d2" stroke-width="5"/>
+  <rect x="172" y="182" width="420" height="332" rx="24" fill="#f9fbf7" stroke="#d8e2d4" stroke-width="4"/>
+  <rect x="214" y="226" width="336" height="22" rx="11" fill="#e3efe1"/>
+  <rect x="214" y="262" width="286" height="22" rx="11" fill="#e3efe1"/>
+  <rect x="214" y="318" width="336" height="18" rx="9" fill="#f5e3c7"/>
+  <rect x="214" y="350" width="260" height="18" rx="9" fill="#f5e3c7"/>
+  <rect x="214" y="406" width="336" height="18" rx="9" fill="#dce8fb"/>
+  <rect x="214" y="438" width="306" height="18" rx="9" fill="#dce8fb"/>
+  <circle cx="802" cy="286" r="110" fill="#fff8e9" stroke="#d8bd8c" stroke-width="5"/>
+  <rect x="744" y="256" width="116" height="70" rx="12" fill="#fef2cf" stroke="#d7bb85" stroke-width="4"/>
+  <path d="M784 256 V232 H820 V256" fill="none" stroke="#9b7a43" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="744" cy="418" r="70" fill="#e8f4ff" stroke="#bad4ee" stroke-width="4"/>
+  <path d="M710 418 L736 444 L784 392" fill="none" stroke="#3f8a4f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="882" y="360" width="170" height="116" rx="18" fill="#f7f8fb" stroke="#d5dae7" stroke-width="4"/>
+  <rect x="916" y="392" width="102" height="16" rx="8" fill="#dde6f9"/>
+  <rect x="916" y="422" width="102" height="16" rx="8" fill="#dde6f9"/>
+</svg>
